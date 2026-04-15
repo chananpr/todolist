@@ -131,6 +131,8 @@ flowchart TD
 - [API Design](docs/08-api-design.md)
 - [Frontend Experience](docs/09-frontend-experience.md)
 - [Codebase Structure](docs/14-codebase-structure.md)
+- [AI Agent Context](docs/15-ai-agent-context.md)
+- [Frontend Implementation Guide](docs/16-frontend-implementation-guide.md)
 
 ## Quick Start
 
@@ -156,6 +158,7 @@ docker compose up -d
 - `.env.example` is configured to use MySQL on port `3307` when running through Docker Compose.
 - The current frontend demonstrates the dashboard experience and shared UI structure.
 - The codebase is intentionally organized for scale, team ownership, and future feature expansion.
+- AI-facing repo guides are available in `AGENTS.md`, `apps/api/AGENTS.md`, and `apps/web/AGENTS.md`.
 
 ## Why This Project Exists
 
@@ -166,4 +169,3 @@ I built this repository to demonstrate how I approach full-stack application arc
 - documenting tradeoffs, risks, and delivery strategy
 
 For a recruiter or hiring team, this repo is meant to show both implementation ability and engineering judgment.
-# todolist

@@ -1,14 +1,14 @@
 export const metrics = [
-  { label: 'Active Projects', value: '24', delta: '+6%', tone: 'from-emerald-400/20 to-teal-300/5' },
-  { label: 'Tasks Due Today', value: '38', delta: '+12%', tone: 'from-orange-400/25 to-amber-200/5' },
-  { label: 'Review Queue', value: '14', delta: '-3%', tone: 'from-sky-400/25 to-cyan-200/5' },
-  { label: 'KPI Health', value: '91%', delta: '+2.1%', tone: 'from-fuchsia-400/15 to-rose-300/5' }
+  { label: 'Active Projects', value: '24', delta: '+6%', tone: 'from-primary-300/45 via-primary-100/40 to-white' },
+  { label: 'Tasks Due Today', value: '38', delta: '+12%', tone: 'from-sky-300/45 via-primary-50/60 to-white' },
+  { label: 'Review Queue', value: '14', delta: '-3%', tone: 'from-indigo-300/35 via-primary-100/35 to-white' },
+  { label: 'KPI Health', value: '91%', delta: '+2.1%', tone: 'from-blue-300/35 via-primary-100/40 to-white' }
 ];
 
 export const lanes = [
   {
     title: 'Backlog',
-    accent: 'bg-slate-400',
+    accent: 'bg-slate-500',
     cards: [
       { title: 'HR role permission matrix', meta: '12 subtasks', assignee: 'People Ops' },
       { title: 'AI weekly planning template', meta: 'Prompt revision', assignee: 'Ops AI' }
@@ -16,7 +16,7 @@ export const lanes = [
   },
   {
     title: 'In Progress',
-    accent: 'bg-amber-400',
+    accent: 'bg-primary-500',
     cards: [
       { title: 'Finance cost evidence flow', meta: 'Due in 2 days', assignee: 'Finance PM' },
       { title: 'Project dashboard aggregation', meta: '64% complete', assignee: 'Platform' }
@@ -24,14 +24,14 @@ export const lanes = [
   },
   {
     title: 'Review',
-    accent: 'bg-cyan-300',
+    accent: 'bg-sky-400',
     cards: [
       { title: 'Task reassignment policy', meta: 'Awaiting director signoff', assignee: 'Operations' }
     ]
   },
   {
     title: 'Done',
-    accent: 'bg-emerald-400',
+    accent: 'bg-blue-700',
     cards: [
       { title: 'Employee activation audit trail', meta: 'Delivered today', assignee: 'Security' }
     ]

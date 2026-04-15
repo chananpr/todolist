@@ -1,69 +1,82 @@
 import { motion } from 'framer-motion';
-import { AlertTriangle, Bot, TrendingUp } from 'lucide-react';
+import { AlertCircle, Bot, Zap, History } from 'lucide-react';
 import { aiSignals, recentActivity, teamLoad } from '../../../shared/data/dashboard';
 
 export function SignalsPanel() {
   return (
-    <section className="grid gap-4 xl:grid-cols-[1.2fr_0.8fr]">
+    <section className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
       <motion.article
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.28 }}
-        className="rounded-[32px] border border-white/10 bg-white/5 p-5 shadow-panel backdrop-blur-xl"
+        transition={{ delay: 0.28, ease: [0.16, 1, 0.3, 1] }}
+        className="rounded-[32px] border border-primary-100/80 bg-white/90 p-6 shadow-panel lg:p-8"
       >
-        <div className="flex items-center gap-3">
-          <div className="rounded-2xl bg-mint/15 p-3 text-mint">
-            <Bot className="h-5 w-5" />
+        <div className="flex items-center gap-4">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-50 to-white text-primary-700 shadow-soft">
+            <Bot className="h-6 w-6" />
           </div>
           <div>
-            <p className="text-xs uppercase tracking-[0.24em] text-sand/50">AI Signals</p>
-            <h3 className="mt-1 font-display text-2xl font-bold text-white">Planning Recommendations</h3>
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary-600">AI Intelligence</p>
+            <h3 className="mt-1 font-display text-2xl font-bold text-slate-900">Strategic Recommendations</h3>
           </div>
         </div>
 
-        <div className="mt-5 space-y-3">
+        <div className="mt-8 space-y-4">
           {aiSignals.map((signal, index) => (
             <motion.div
               key={signal}
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.35 + index * 0.07 }}
-              className="rounded-3xl border border-white/10 bg-night/40 p-4"
+              className="flex items-start gap-4 rounded-2xl border border-primary-100/70 bg-gradient-to-r from-primary-50/60 to-white p-4 transition-colors hover:border-primary-200"
             >
-              <p className="text-sm leading-7 text-sand/80">{signal}</p>
+              <div className="mt-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white shadow-soft">
+                <div className="h-1.5 w-1.5 rounded-full bg-primary-600" />
+              </div>
+              <p className="text-sm font-medium leading-relaxed text-slate-600">{signal}</p>
             </motion.div>
           ))}
         </div>
       </motion.article>
 
-      <div className="grid gap-4">
+      <div className="grid gap-6">
         <motion.article
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.32 }}
-          className="rounded-[32px] border border-white/10 bg-white/5 p-5 shadow-panel backdrop-blur-xl"
+          transition={{ delay: 0.32, ease: [0.16, 1, 0.3, 1] }}
+          className="rounded-[32px] border border-primary-100/80 bg-white/90 p-6 shadow-panel"
         >
-          <div className="flex items-center gap-3">
-            <div className="rounded-2xl bg-ember/15 p-3 text-ember">
-              <TrendingUp className="h-5 w-5" />
+          <div className="flex items-center gap-4">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary-50 to-white text-primary-700 shadow-soft">
+              <Zap className="h-5 w-5" />
             </div>
             <div>
-              <p className="text-xs uppercase tracking-[0.24em] text-sand/50">Team Capacity</p>
-              <h3 className="mt-1 font-display text-xl font-bold text-white">Current Load</h3>
+              <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Resource Management</p>
+              <h3 className="mt-1 font-display text-xl font-bold text-slate-900">Current Load</h3>
             </div>
           </div>
 
-          <div className="mt-5 space-y-4">
+          <div className="mt-8 space-y-6">
             {teamLoad.map((team) => (
               <div key={team.name}>
-                <div className="mb-2 flex items-center justify-between text-sm text-sand/70">
-                  <span>{team.name}</span>
-                  <span>{team.load}%</span>
+                <div className="mb-2 flex items-center justify-between">
+                  <span className="text-sm font-bold text-slate-700">{team.name}</span>
+                  <span className="text-xs font-bold text-slate-400">{team.load}%</span>
                 </div>
-                <div className="h-2 rounded-full bg-white/5">
-                  <div className="h-2 rounded-full bg-gradient-to-r from-mint to-emerald-300" style={{ width: `${team.load}%` }} />
+                <div className="h-2 rounded-full bg-primary-100/70">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: `${team.load}%` }}
+                    transition={{ delay: 0.5, duration: 1 }}
+                    className={`h-2 rounded-full ${
+                      team.load > 80 ? 'bg-slate-900' : 'bg-gradient-to-r from-primary-500 to-primary-700'
+                    }`}
+                  />
                 </div>
-                <p className="mt-2 text-xs uppercase tracking-[0.22em] text-sand/35">{team.tasks} active tasks</p>
+                <div className="mt-2 flex items-center gap-1.5">
+                  <AlertCircle className={`h-3 w-3 ${team.load > 80 ? 'text-slate-700' : 'text-primary-300'}`} />
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">{team.tasks} active tasks</p>
+                </div>
               </div>
             ))}
           </div>
@@ -72,23 +85,23 @@ export function SignalsPanel() {
         <motion.article
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.36 }}
-          className="rounded-[32px] border border-white/10 bg-white/5 p-5 shadow-panel backdrop-blur-xl"
+          transition={{ delay: 0.36, ease: [0.16, 1, 0.3, 1] }}
+          className="rounded-[32px] border border-primary-100/80 bg-white/90 p-6 shadow-panel"
         >
-          <div className="flex items-center gap-3">
-            <div className="rounded-2xl bg-yellow-400/15 p-3 text-yellow-300">
-              <AlertTriangle className="h-5 w-5" />
+          <div className="flex items-center gap-4">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary-50 to-white text-primary-700 shadow-soft">
+              <History className="h-5 w-5" />
             </div>
             <div>
-              <p className="text-xs uppercase tracking-[0.24em] text-sand/50">Recent Activity</p>
-              <h3 className="mt-1 font-display text-xl font-bold text-white">Operational Timeline</h3>
+              <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Activity Logs</p>
+              <h3 className="mt-1 font-display text-xl font-bold text-slate-900">Operational Timeline</h3>
             </div>
           </div>
 
-          <ul className="mt-5 space-y-3">
-            {recentActivity.map((item) => (
-              <li key={item} className="rounded-3xl border border-white/10 bg-night/40 px-4 py-3 text-sm text-sand/75">
-                {item}
+          <ul className="mt-8 space-y-4">
+            {recentActivity.map((item, i) => (
+              <li key={i} className="relative flex items-center gap-3 pl-4 before:absolute before:left-0 before:h-1.5 before:w-1.5 before:rounded-full before:bg-primary-300">
+                <span className="text-sm font-medium text-slate-500">{item}</span>
               </li>
             ))}
           </ul>

@@ -5,17 +5,22 @@
 @tailwind utilities;
 
 :root {
-  color: #f6efe5;
-  background:
-    radial-gradient(circle at top left, rgba(99, 242, 213, 0.16), transparent 30%),
-    radial-gradient(circle at 85% 10%, rgba(255, 129, 83, 0.18), transparent 26%),
-    linear-gradient(180deg, #08121f 0%, #0b1627 45%, #09111d 100%);
+  --background: #f4f8ff;
+  --foreground: #0f172a;
+  
+  color: var(--foreground);
+  background: 
+    radial-gradient(circle at top left, rgba(37, 99, 235, 0.15) 0%, transparent 34%),
+    radial-gradient(circle at 85% 18%, rgba(96, 165, 250, 0.18) 0%, transparent 28%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(239, 246, 255, 0.94) 100%),
+    var(--background);
   font-family: 'Manrope', sans-serif;
-  color-scheme: dark;
 }
 
 * {
   box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 html,
@@ -27,6 +32,7 @@ body,
 body {
   margin: 0;
   background-attachment: fixed;
+  color: var(--foreground);
 }
 
 body::before {
@@ -34,24 +40,47 @@ body::before {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 72px 72px;
-  mask-image: radial-gradient(circle at center, black 40%, transparent 95%);
-  animation: pulseGrid 6s ease-in-out infinite;
+  background-image: 
+    linear-gradient(rgba(37, 99, 235, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37, 99, 235, 0.05) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(circle at center, black 58%, transparent 100%);
+  opacity: 0.55;
 }
 
-@keyframes pulseGrid {
-  0%, 100% { opacity: 0.15; }
-  50% { opacity: 0.32; }
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 20% 12%, rgba(255, 255, 255, 0.9) 0%, transparent 18%),
+    radial-gradient(circle at 82% 82%, rgba(191, 219, 254, 0.38) 0%, transparent 22%);
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(246, 239, 229, 0.18);
+  background: rgba(37, 99, 235, 0.16);
   border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(37, 99, 235, 0.28);
+}
+
+@layer components {
+  .glass-panel {
+    @apply border border-white/60 bg-white/78 backdrop-blur-md shadow-panel;
+  }
+
+  .glass-card {
+    @apply border border-primary-100/70 bg-white/72 backdrop-blur-sm shadow-soft;
+  }
 }

@@ -15,3 +15,5 @@
 12. [12 Production Risks](./12-production-risks.md)
 13. [13 Examples](./13-examples.md)
 14. [14 Codebase Structure](./14-codebase-structure.md)
+15. [15 AI Agent Context](./15-ai-agent-context.md)
+16. [16 Frontend Implementation Guide](./16-frontend-implementation-guide.md)
