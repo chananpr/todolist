@@ -1,0 +1,18 @@
+[Unit]
+Description=TaskForge API
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/var/www/todolist/current
+Environment=NODE_ENV=production
+EnvironmentFile=/var/www/todolist/shared/.env.api
+ExecStart=/usr/bin/node /var/www/todolist/current/apps/api/dist/server.js
+Restart=always
+RestartSec=5
+StandardOutput=append:/var/log/taskforge-api.log
+StandardError=append:/var/log/taskforge-api.log
+
+[Install]
+WantedBy=multi-user.target
