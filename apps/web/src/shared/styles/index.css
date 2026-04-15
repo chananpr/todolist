@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color: #f6efe5;
+  background:
+    radial-gradient(circle at top left, rgba(99, 242, 213, 0.16), transparent 30%),
+    radial-gradient(circle at 85% 10%, rgba(255, 129, 83, 0.18), transparent 26%),
+    linear-gradient(180deg, #08121f 0%, #0b1627 45%, #09111d 100%);
+  font-family: 'Manrope', sans-serif;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background-attachment: fixed;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(circle at center, black 40%, transparent 95%);
+  animation: pulseGrid 6s ease-in-out infinite;
+}
+
+@keyframes pulseGrid {
+  0%, 100% { opacity: 0.15; }
+  50% { opacity: 0.32; }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(246, 239, 229, 0.18);
+  border-radius: 999px;
+}

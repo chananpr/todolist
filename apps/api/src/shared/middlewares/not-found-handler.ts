@@ -1,0 +1,9 @@
+import type { Request, Response } from 'express';
+
+export function notFoundHandler(req: Request, res: Response) {
+  res.status(404).json({
+    error: 'not_found',
+    message: `Route ${req.method} ${req.originalUrl} was not found`,
+    requestId: req.requestId
+  });
+}
