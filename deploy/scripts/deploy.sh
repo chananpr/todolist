@@ -3,7 +3,7 @@ set -euo pipefail
 
 APP_DIR=/var/www/todolist
 RELEASE_DIR="$APP_DIR/current"
-REPO_URL="git@github.com:chananpr/todolist.git"
+REPO_URL="https://github.com/chananpr/todolist.git"
 BRANCH="main"
 
 mkdir -p "$APP_DIR"
