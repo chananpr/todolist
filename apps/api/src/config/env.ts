@@ -33,6 +33,7 @@ const envSchema = z.object({
   AWS_ACCESS_KEY_ID: z.string().default('replace-me'),
   AWS_SECRET_ACCESS_KEY: z.string().default('replace-me'),
   AWS_S3_MAX_FILE_SIZE: z.coerce.number().default(5 * 1024 * 1024),
+  ALLOW_DEGRADED_START: z.coerce.boolean().default(false),
   AI_PROVIDER: z.string().default('openai'),
   AI_API_KEY: z.string().min(8),
   AI_MODEL: z.string().default('gpt-5.4-mini')
