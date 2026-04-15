@@ -1,27 +1,67 @@
+import { Op } from 'sequelize';
+import { Task } from './task.model.js';
+
 export interface TaskListItem {
   id: number;
   taskCode: string;
   title: string;
   boardColumn: string;
   priority: string;
-  dueDate: string;
-  assignees: string[];
+  dueDate: string | null;
+  projectId: number;
+  progressPercent: number;
 }
 
 export class TasksRepository {
   async list() {
-    const items: TaskListItem[] = [
-      {
-        id: 1,
-        taskCode: 'TSK-50001',
-        title: 'Build task audit event stream',
-        boardColumn: 'in_progress',
-        priority: 'high',
-        dueDate: '2026-04-22T18:00:00+07:00',
-        assignees: ['Platform', 'Security']
-      }
-    ];
+    const tasks = await Task.findAll({
+      order: [
+        ['createdAt', 'DESC'],
+        ['id', 'DESC']
+      ]
+    });
 
-    return items;
+    return tasks.map((task) => ({
+      id: task.id,
+      taskCode: task.taskCode,
+      title: task.title,
+      boardColumn: task.boardColumnKey,
+      priority: task.priority,
+      dueDate: task.dueDate?.toISOString() ?? null,
+      projectId: task.projectId,
+      progressPercent: Number(task.progressPercent)
+    }));
+  }
+
+  async listDueToday() {
+    const start = new Date();
+    start.setUTCHours(0, 0, 0, 0);
+
+    const end = new Date(start);
+    end.setUTCDate(end.getUTCDate() + 1);
+
+    const tasks = await Task.findAll({
+      where: {
+        dueDate: {
+          [Op.gte]: start,
+          [Op.lt]: end
+        }
+      },
+      order: [
+        ['dueDate', 'ASC'],
+        ['id', 'ASC']
+      ]
+    });
+
+    return tasks.map((task) => ({
+      id: task.id,
+      taskCode: task.taskCode,
+      title: task.title,
+      boardColumn: task.boardColumnKey,
+      priority: task.priority,
+      dueDate: task.dueDate?.toISOString() ?? null,
+      projectId: task.projectId,
+      progressPercent: Number(task.progressPercent)
+    }));
   }
 }

@@ -6,4 +6,8 @@ export class TasksService {
   listTasks() {
     return this.repository.list();
   }
+
+  listTasksDueToday() {
+    return this.repository.listDueToday();
+  }
 }

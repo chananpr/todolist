@@ -11,14 +11,7 @@ export class ProjectsController {
   }
 
   async create(req: Request, res: Response) {
-    return res.status(201).json(
-      ok(
-        {
-          message: 'Project creation endpoint scaffolded',
-          payloadPreview: req.body
-        },
-        req.requestId
-      )
-    );
+    const project = await this.projectsService.createProject(req.body);
+    return res.status(201).json(ok({ project }, req.requestId));
   }
 }

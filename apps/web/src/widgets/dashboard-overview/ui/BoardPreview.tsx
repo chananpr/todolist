@@ -1,8 +1,33 @@
 import { motion } from 'framer-motion';
+import type { DashboardBoardLane } from '@taskforge/contracts';
 import { GripVertical, Layers } from 'lucide-react';
-import { lanes } from '../../../shared/data/dashboard';
 
-export function BoardPreview() {
+interface BoardPreviewProps {
+  lanes: DashboardBoardLane[];
+  loading?: boolean;
+  error?: string | null;
+}
+
+function getLaneAccent(key: string) {
+  switch (key) {
+    case 'backlog':
+      return 'bg-slate-500';
+    case 'todo':
+      return 'bg-primary-400';
+    case 'in_progress':
+      return 'bg-primary-500';
+    case 'review':
+      return 'bg-sky-400';
+    case 'done':
+      return 'bg-blue-700';
+    case 'cancelled':
+      return 'bg-slate-300';
+    default:
+      return 'bg-primary-300';
+  }
+}
+
+export function BoardPreview({ lanes, loading = false, error }: BoardPreviewProps) {
   return (
     <motion.section
       initial={{ opacity: 0, y: 20 }}
@@ -23,21 +48,32 @@ export function BoardPreview() {
         <p className="hidden text-sm font-medium text-slate-400 lg:block">Drag and drop lanes with audit-safe movement history</p>
       </div>
 
-      <div className="grid gap-6 xl:grid-cols-4">
+      {error ? (
+        <div className="rounded-[28px] border border-rose-200 bg-rose-50/80 p-6 text-sm font-medium text-rose-700">
+          {error}
+        </div>
+      ) : (
+        <div className="grid gap-6 xl:grid-cols-4">
         {lanes.map((lane, laneIndex) => (
           <div key={lane.title} className="rounded-[28px] border border-primary-100/70 bg-gradient-to-b from-primary-50/45 to-white p-4">
             <div className="mb-4 flex items-center justify-between px-2">
               <div className="flex items-center gap-2">
-                <span className={`h-2.5 w-2.5 rounded-full ${lane.accent}`} />
+                <span className={`h-2.5 w-2.5 rounded-full ${getLaneAccent(lane.key)}`} />
                 <h4 className="text-sm font-bold text-slate-700">{lane.title}</h4>
               </div>
               <span className="text-[10px] font-bold text-slate-400">{lane.cards.length}</span>
             </div>
 
             <div className="space-y-4">
+              {lane.cards.length === 0 && !loading ? (
+                <div className="rounded-2xl border border-dashed border-primary-100 bg-white/70 p-4 text-sm font-medium text-slate-400">
+                  No tasks in this column.
+                </div>
+              ) : null}
+
               {lane.cards.map((card, cardIndex) => (
                 <motion.article
-                  key={card.title}
+                  key={card.id}
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.25 + laneIndex * 0.06 + cardIndex * 0.04 }}
@@ -48,25 +84,28 @@ export function BoardPreview() {
                   <div className="flex items-start justify-between gap-3">
                     <div className="relative z-10">
                       <p className="text-sm font-bold text-slate-800 transition-colors group-hover:text-primary-600">{card.title}</p>
-                      <p className="mt-1.5 text-xs font-medium text-slate-400">{card.meta}</p>
+                      <p className="mt-1.5 text-xs font-medium text-slate-400">
+                        {card.taskCode} · Priority {card.priority} · {Math.round(card.progressPercent)}%
+                      </p>
                     </div>
                     <GripVertical className="relative z-10 mt-1 h-4 w-4 text-primary-200 group-hover:text-primary-400" />
                   </div>
                   
                   <div className="relative z-10 mt-5 flex items-center justify-between">
-                    <div className="flex -space-x-2">
-                      {[1, 2].map((i) => (
-                        <div key={i} className="h-6 w-6 rounded-full border-2 border-white bg-gradient-to-br from-primary-100 to-primary-50 shadow-sm" />
-                      ))}
+                    <div className="rounded-full border border-primary-100 bg-primary-50 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-primary-700">
+                      Project #{card.projectId}
                     </div>
-                    <p className="text-[10px] font-bold uppercase tracking-wider text-primary-700/70">{card.assignee}</p>
+                    <p className="text-[10px] font-bold uppercase tracking-wider text-primary-700/70">
+                      {card.dueDate ? new Date(card.dueDate).toLocaleDateString() : 'No due date'}
+                    </p>
                   </div>
                 </motion.article>
               ))}
             </div>
           </div>
         ))}
-      </div>
+        </div>
+      )}
     </motion.section>
   );
 }

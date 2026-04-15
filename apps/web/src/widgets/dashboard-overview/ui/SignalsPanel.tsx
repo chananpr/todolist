@@ -1,8 +1,16 @@
 import { motion } from 'framer-motion';
+import type { DashboardLoadItem } from '@taskforge/contracts';
 import { AlertCircle, Bot, Zap, History } from 'lucide-react';
-import { aiSignals, recentActivity, teamLoad } from '../../../shared/data/dashboard';
 
-export function SignalsPanel() {
+interface SignalsPanelProps {
+  signals: string[];
+  load: DashboardLoadItem[];
+  recentActivity: string[];
+  loading?: boolean;
+  error?: string | null;
+}
+
+export function SignalsPanel({ signals, load, recentActivity, loading = false, error }: SignalsPanelProps) {
   return (
     <section className="grid gap-6 xl:grid-cols-[1.2fr_0.8fr]">
       <motion.article
@@ -22,7 +30,13 @@ export function SignalsPanel() {
         </div>
 
         <div className="mt-8 space-y-4">
-          {aiSignals.map((signal, index) => (
+          {signals.length === 0 && !loading ? (
+            <div className="rounded-2xl border border-dashed border-primary-100 bg-gradient-to-r from-primary-50/60 to-white p-4 text-sm font-medium text-slate-400">
+              No live recommendations yet. Add projects and tasks to generate operational signals.
+            </div>
+          ) : null}
+
+          {signals.map((signal, index) => (
             <motion.div
               key={signal}
               initial={{ opacity: 0, x: -10 }}
@@ -52,12 +66,18 @@ export function SignalsPanel() {
             </div>
             <div>
               <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Resource Management</p>
-              <h3 className="mt-1 font-display text-xl font-bold text-slate-900">Current Load</h3>
+              <h3 className="mt-1 font-display text-xl font-bold text-slate-900">Workflow Load</h3>
             </div>
           </div>
 
           <div className="mt-8 space-y-6">
-            {teamLoad.map((team) => (
+            {load.length === 0 && !loading ? (
+              <div className="rounded-2xl border border-dashed border-primary-100 bg-white/70 p-4 text-sm font-medium text-slate-400">
+                No task distribution available yet.
+              </div>
+            ) : null}
+
+            {load.map((team) => (
               <div key={team.name}>
                 <div className="mb-2 flex items-center justify-between">
                   <span className="text-sm font-bold text-slate-700">{team.name}</span>
@@ -99,6 +119,14 @@ export function SignalsPanel() {
           </div>
 
           <ul className="mt-8 space-y-4">
+            {error ? (
+              <li className="text-sm font-medium text-rose-600">{error}</li>
+            ) : null}
+
+            {recentActivity.length === 0 && !loading && !error ? (
+              <li className="text-sm font-medium text-slate-400">No recent database activity yet.</li>
+            ) : null}
+
             {recentActivity.map((item, i) => (
               <li key={i} className="relative flex items-center gap-3 pl-4 before:absolute before:left-0 before:h-1.5 before:w-1.5 before:rounded-full before:bg-primary-300">
                 <span className="text-sm font-medium text-slate-500">{item}</span>

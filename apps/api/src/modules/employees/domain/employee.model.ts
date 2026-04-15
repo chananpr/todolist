@@ -1,7 +1,10 @@
 import { DataTypes, Model, type CreationOptional, type InferAttributes, type InferCreationAttributes } from 'sequelize';
 import { sequelize } from '../../../infrastructure/database/sequelize.js';
 
-export class Employee extends Model<InferAttributes<Employee>, InferCreationAttributes<Employee>> {
+export class Employee extends Model<
+  InferAttributes<Employee, { omit: 'createdAt' | 'updatedAt' }>,
+  InferCreationAttributes<Employee, { omit: 'createdAt' | 'updatedAt' }>
+> {
   declare id: CreationOptional<number>;
   declare userId: number;
   declare employeeCode: string;
@@ -13,6 +16,8 @@ export class Employee extends Model<InferAttributes<Employee>, InferCreationAttr
   declare teamId: number | null;
   declare position: string | null;
   declare employmentStatus: string;
+  declare readonly createdAt: CreationOptional<Date>;
+  declare readonly updatedAt: CreationOptional<Date>;
 }
 
 Employee.init(

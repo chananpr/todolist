@@ -11,7 +11,7 @@ export class TasksController {
   }
 
   async today(req: Request, res: Response) {
-    const items = await this.tasksService.listTasks();
+    const items = await this.tasksService.listTasksDueToday();
     return res.json(ok({ items, mode: 'today' }, req.requestId));
   }
 }

@@ -5,7 +5,8 @@ import { DashboardService } from '../domain/dashboard.service.js';
 export class DashboardController {
   constructor(private readonly dashboardService: DashboardService) {}
 
-  getOverview(req: Request, res: Response) {
-    return res.json(ok({ metrics: this.dashboardService.getOverview() }, req.requestId));
+  async getOverview(req: Request, res: Response) {
+    const overview = await this.dashboardService.getOverview();
+    return res.json(ok(overview, req.requestId));
   }
 }

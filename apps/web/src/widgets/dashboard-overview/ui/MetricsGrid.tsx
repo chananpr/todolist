@@ -1,11 +1,27 @@
 import { motion } from 'framer-motion';
-import { metrics } from '../../../shared/data/dashboard';
+import type { DashboardMetric } from '@taskforge/contracts';
 import { TrendingUp, TrendingDown } from 'lucide-react';
 
-export function MetricsGrid() {
+interface MetricsGridProps {
+  metrics?: DashboardMetric;
+  loading?: boolean;
+}
+
+const metricCards = [
+  { label: 'Active Projects', key: 'activeProjects', tone: 'from-primary-300/45 via-primary-100/40 to-white' },
+  { label: 'Tasks Due Today', key: 'dueToday', tone: 'from-sky-300/45 via-primary-50/60 to-white' },
+  { label: 'Review Queue', key: 'reviewQueue', tone: 'from-indigo-300/35 via-primary-100/35 to-white' },
+  { label: 'Overdue Tasks', key: 'overdue', tone: 'from-blue-300/35 via-primary-100/40 to-white' }
+] as const;
+
+export function MetricsGrid({ metrics, loading = false }: MetricsGridProps) {
   return (
     <section className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-      {metrics.map((metric, index) => (
+      {metricCards.map((metric, index) => {
+        const value = metrics?.[metric.key] ?? 0;
+        const delta = loading ? '...' : value > 0 ? `${value}` : '0';
+
+        return (
         <motion.article
           key={metric.label}
           initial={{ opacity: 0, y: 18 }}
@@ -19,18 +35,18 @@ export function MetricsGrid() {
           <div className="flex items-center justify-between">
             <p className="relative z-10 text-sm font-bold text-slate-500">{metric.label}</p>
             <div className={`relative z-10 flex h-8 w-8 items-center justify-center rounded-xl ${
-              metric.delta.startsWith('+') ? 'bg-white text-primary-700 shadow-soft' : 'bg-slate-900 text-white shadow-soft'
+              value > 0 ? 'bg-white text-primary-700 shadow-soft' : 'bg-slate-900 text-white shadow-soft'
             }`}>
-              {metric.delta.startsWith('+') ? <TrendingUp className="h-4 w-4" /> : <TrendingDown className="h-4 w-4" />}
+              {value > 0 ? <TrendingUp className="h-4 w-4" /> : <TrendingDown className="h-4 w-4" />}
             </div>
           </div>
           
           <div className="relative z-10 mt-8 flex items-baseline gap-2">
-            <h2 className="font-display text-4xl font-bold text-slate-900">{metric.value}</h2>
+            <h2 className="font-display text-4xl font-bold text-slate-900">{loading ? '...' : value}</h2>
             <span className={`text-xs font-bold ${
-              metric.delta.startsWith('+') ? 'text-primary-700' : 'text-slate-700'
+              value > 0 ? 'text-primary-700' : 'text-slate-700'
             }`}>
-              {metric.delta}
+              {delta}
             </span>
           </div>
 
@@ -45,7 +61,8 @@ export function MetricsGrid() {
           
           <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/55 to-transparent group-hover:animate-shimmer" />
         </motion.article>
-      ))}
+        );
+      })}
     </section>
   );
 }

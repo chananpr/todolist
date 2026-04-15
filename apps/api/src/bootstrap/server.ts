@@ -3,12 +3,14 @@ import { env } from '../config/env.js';
 import { sequelize } from '../infrastructure/database/sequelize.js';
 import { logger } from '../infrastructure/logging/logger.js';
 import { databaseRuntimeState } from '../infrastructure/database/runtime-state.js';
+import '../infrastructure/database/register-models.js';
 
 const app = createApp();
 
 async function bootstrap() {
   try {
     await sequelize.authenticate();
+    await sequelize.sync(env.NODE_ENV === 'production' ? undefined : { alter: true });
     databaseRuntimeState.connected = true;
     databaseRuntimeState.degraded = false;
     databaseRuntimeState.lastError = null;

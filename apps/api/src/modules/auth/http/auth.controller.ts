@@ -5,12 +5,13 @@ import { AuthService } from '../domain/auth.service.js';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  getMe(req: Request, res: Response) {
+  async getMe(req: Request, res: Response) {
+    const session = await this.authService.getCurrentSession(req.auth?.employeeId);
     return res.json(
       ok(
         {
           user: req.auth ?? null,
-          ...this.authService.getCurrentSession()
+          ...session
         },
         req.requestId
       )
