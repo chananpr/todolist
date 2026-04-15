@@ -17,3 +17,4 @@
 14. [14 Codebase Structure](./14-codebase-structure.md)
 15. [15 AI Agent Context](./15-ai-agent-context.md)
 16. [16 Frontend Implementation Guide](./16-frontend-implementation-guide.md)
+17. [17 Server Workflow](./17-server-workflow.md)

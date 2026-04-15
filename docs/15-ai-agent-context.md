@@ -6,6 +6,8 @@ This document is written for AI coding agents that need fast orientation before 
 
 It complements `AGENTS.md` files by summarizing the most important repo-wide assumptions.
 
+For server path and deployment/runtime rules, also read `docs/17-server-workflow.md`.
+
 ## What This Project Is
 
 TaskForge Enterprise is a portfolio-grade monorepo for an enterprise task and project management platform.
@@ -28,7 +30,6 @@ The project emphasizes:
 ## What Is Still Scaffold-Level
 
 - many domain modules are still sample or starter implementations
-- frontend data is currently mocked
 - AI planning is represented as a schema-driven scaffold, not a full provider workflow
 - queue, storage, and analytics are documented more deeply than they are implemented
 
