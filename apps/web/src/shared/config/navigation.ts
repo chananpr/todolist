@@ -1,5 +1,5 @@
 import type { LucideIcon } from 'lucide-react';
-import { getNavRoutes, type RouteNode } from './sitemap';
+import { getNavRoutes, type Role, type RouteNode } from './sitemap';
 
 /**
  * Sidebar navigation items. Derived from sitemap.ts — add or reorder
@@ -12,6 +12,7 @@ export interface NavigationItem {
   eyebrow: string;
   summary: string;
   highlights: string[];
+  minRole: Role;
 }
 
 function toNavigationItem(route: RouteNode): NavigationItem {
@@ -24,7 +25,8 @@ function toNavigationItem(route: RouteNode): NavigationItem {
     icon: route.icon,
     eyebrow: route.eyebrow,
     summary: route.summary,
-    highlights: route.highlights ?? []
+    highlights: route.highlights ?? [],
+    minRole: route.minRole
   };
 }
 

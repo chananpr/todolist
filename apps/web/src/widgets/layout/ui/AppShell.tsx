@@ -1,10 +1,76 @@
-import type { ReactNode } from 'react';
-import { motion } from 'framer-motion';
-import { Layers, Search, Bell, ChevronDown, Command } from 'lucide-react';
+import { type ReactNode, useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Layers, Search, Bell, ChevronDown, Command, Shield } from 'lucide-react';
 import { Link, NavLink } from 'react-router-dom';
 import { primaryNavigation } from '../../../shared/config/navigation';
+import { ROLE_LEVEL, type Role } from '../../../shared/config/sitemap';
+import { useAuth } from '../../../app/AuthContext';
+
+const ALL_ROLES: Role[] = ['public', 'member', 'manager', 'admin'];
+
+function RoleSwitcher() {
+  const { currentRole, setCurrentRole } = useAuth();
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className="flex items-center gap-2 rounded-2xl border border-primary-100 bg-white/85 px-3 py-2 text-sm font-semibold text-slate-600 shadow-soft transition-colors hover:text-primary-700"
+      >
+        <Shield className="h-4 w-4 text-primary-500" />
+        <span className="capitalize">{currentRole}</span>
+        <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-150 ${open ? 'rotate-180' : ''}`} />
+      </button>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.15 }}
+            className="absolute right-0 top-full z-50 mt-2 w-40 rounded-xl border border-primary-100 bg-white p-1 shadow-lg"
+          >
+            {ALL_ROLES.map((role) => (
+              <button
+                key={role}
+                onClick={() => {
+                  setCurrentRole(role);
+                  setOpen(false);
+                }}
+                className={`flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm transition-colors duration-100 ${
+                  role === currentRole
+                    ? 'bg-primary-50 font-semibold text-primary-700'
+                    : 'text-slate-600 hover:bg-slate-50'
+                }`}
+              >
+                <span className="capitalize">{role}</span>
+              </button>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
 
 export function AppShell({ children }: { children: ReactNode }) {
+  const { currentRole } = useAuth();
+  const filteredNavigation = primaryNavigation.filter(
+    (item) => ROLE_LEVEL[currentRole] >= ROLE_LEVEL[item.minRole]
+  );
+
   return (
     <div className="relative min-h-screen overflow-hidden bg-brand-mist text-slate-900 selection:bg-primary-100 selection:text-primary-900">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.94),transparent_30%),radial-gradient(circle_at_80%_15%,rgba(191,219,254,0.45),transparent_25%)]" />
@@ -25,7 +91,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         </div>
 
         <nav className="mt-10 space-y-1.5">
-          {primaryNavigation.map(({ label, path, icon: Icon }) => (
+          {filteredNavigation.map(({ label, path, icon: Icon }) => (
             <NavLink
               key={label}
               to={path}
@@ -97,6 +163,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           </div>
 
           <div className="flex items-center gap-4">
+            <RoleSwitcher />
             <button className="relative rounded-2xl border border-primary-100 bg-white/85 p-2 text-slate-400 shadow-soft transition-colors hover:text-primary-700">
               <Bell className="h-5 w-5" />
               <span className="absolute right-2.5 top-2.5 h-2 w-2 rounded-full border-2 border-white bg-rose-500" />
