@@ -8,7 +8,7 @@ on:
 
 jobs:
   web:
-    name: web — test · build
+    name: web — typecheck · test · build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -19,10 +19,15 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
+        # Root `postinstall` builds @taskforge/contracts so downstream
+        # workspaces can resolve its types.
         run: npm ci
 
       - name: Typecheck contracts
         run: npm run typecheck -w @taskforge/contracts
+
+      - name: Typecheck web
+        run: npm run typecheck -w apps/web
 
       - name: Unit tests (web)
         run: npm run test -w apps/web
@@ -32,7 +37,7 @@ jobs:
         working-directory: apps/web
 
   api:
-    name: api — test
+    name: api — typecheck · test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -45,10 +50,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Typecheck api
+        run: npm run typecheck -w apps/api
+
       - name: Unit tests (api)
-        # Runtime-only: vitest uses esbuild and strips TS types, so
-        # pre-existing tsc errors on `main` (missing Dashboard* contract
-        # exports) do not block these tests. A follow-up PR should add
-        # the missing types to packages/contracts and re-enable
-        # `typecheck -w apps/api` here.
         run: npm run test -w apps/api
