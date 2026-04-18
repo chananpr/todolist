@@ -14,3 +14,4 @@ export { Card, type CardProps } from './Card';
 export { PageHeader, type PageHeaderProps } from './PageHeader';
 export { SectionTitle, type SectionTitleProps } from './SectionTitle';
 export { EmptyState, type EmptyStateProps } from './EmptyState';
+export { RouteScaffold, type RouteScaffoldProps } from './RouteScaffold';

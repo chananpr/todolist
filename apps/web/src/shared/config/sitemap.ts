@@ -284,6 +284,15 @@ export function findRouteByPath(url: string): RouteNode | undefined {
   return flattenSitemap().find((node) => matchesPattern(node.path, normalized));
 }
 
+/**
+ * Find a route node by its stored pattern (exact string match). Use
+ * this from a page module that statically knows its pattern, e.g.
+ * `findRouteByPattern('/projects/:id')`.
+ */
+export function findRouteByPattern(pattern: string): RouteNode | undefined {
+  return flattenSitemap().find((node) => node.path === pattern);
+}
+
 /** Return ancestor chain for a URL, root first, matched route last. */
 export function getBreadcrumbChain(url: string): RouteNode[] {
   const normalized = url.split('?')[0].split('#')[0] || '/';
