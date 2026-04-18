@@ -28,9 +28,26 @@ Use this file as the first-stop context when an AI agent needs to understand the
 ## Current Product State
 
 - The backend is a structured scaffold with domain modules and a small set of working endpoints.
-- The frontend currently focuses on a dashboard experience and uses local mock data.
+- The frontend ships scaffold pages for every route in `design/sitemap.md`, backed by a shared `RouteScaffold` template so AI feature work only has to replace the body, not rebuild the page shell.
+- The design foundation (sitemap, tokens, primitives) is wired into code — see `Design Foundation` below.
 - AI planning exists as a scaffold and schema-validation path, not yet a real provider integration flow.
 - This repo is designed to show architecture quality, code organization, and extensibility.
+
+## Design Foundation (AI must reuse)
+
+Before writing new UI or adding routes, read these files in order:
+
+1. **Route spec** — `apps/web/src/shared/config/sitemap.ts` (source of truth) + `design/sitemap.md` (human doc). Always update both together.
+2. **Design tokens** — `apps/web/tailwind.config.ts` + `design/tokens.md`. Colors must come from `primary-*` / `brand-*` / semantic palette. Motion ≤ 250ms.
+3. **UI primitives** — `apps/web/src/shared/ui/index.ts`. Reuse `Button`, `Card`, `PageHeader`, `SectionTitle`, `EmptyState`, `RouteScaffold`, `Badge` **before** hand-rolling markup.
+4. **Page convention** — every route uses `<RouteScaffold route={...} leading={<Breadcrumb />}>`. Replace children, keep the wrapper.
+5. **Contracts** — types shared between frontend and backend live in `packages/contracts/src/types/api.ts`. The root `postinstall` rebuilds the `dist/` output so TS resolution always works.
+
+## Testing Foundation
+
+- Web: Vitest + React Testing Library + jsdom — tests next to the subject (`Button.test.tsx` beside `Button.tsx`)
+- API: Vitest + supertest, node env — `src/test/setup.ts` fills required env secrets so `createApp()` boots without MySQL
+- CI: `.github/workflows/ci.yml` runs typecheck + tests + vite build on every PR to `main`
 
 ## High-Signal Entry Points
 
@@ -142,6 +159,7 @@ docker compose up -d
 - `docs/08-api-design.md`
 - `docs/09-frontend-experience.md`
 - `docs/14-codebase-structure.md`
+- `docs/18-ai-playbook.md` ← recipes for common AI-assisted tasks (new route, widget, endpoint, test)
 
 ## Important Constraints
 
