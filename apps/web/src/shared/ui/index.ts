@@ -11,6 +11,7 @@
 export { Badge } from './Badge';
 export { Button, type ButtonProps } from './Button';
 export { Card, type CardProps } from './Card';
+export { Drawer, type DrawerProps } from './Drawer';
 export { PageHeader, type PageHeaderProps } from './PageHeader';
 export { SectionTitle, type SectionTitleProps } from './SectionTitle';
 export { EmptyState, type EmptyStateProps } from './EmptyState';
