@@ -1,10 +1,13 @@
-import { Outlet } from 'react-router-dom';
 import { AppShell } from '../widgets/layout/ui/AppShell';
+import { AuthProvider } from './AuthContext';
+import { RoleGate } from './RoleGate';
 
 export function AppLayout() {
   return (
-    <AppShell>
-      <Outlet />
-    </AppShell>
+    <AuthProvider>
+      <AppShell>
+        <RoleGate />
+      </AppShell>
+    </AuthProvider>
   );
 }
