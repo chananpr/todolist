@@ -1,14 +1,64 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Plus, ArrowUpRight, TriangleAlert, Circle } from 'lucide-react';
-import { Button, Card, RouteScaffold, SectionTitle } from '../../../shared/ui';
+import { Plus, ArrowUpRight, TriangleAlert, Circle, Loader2 } from 'lucide-react';
+import { Button, Card, EmptyState, RouteScaffold, SectionTitle } from '../../../shared/ui';
 import { findRouteByPattern } from '../../../shared/config/sitemap';
 import { Breadcrumb } from '../../../widgets/layout/ui/Breadcrumb';
 import { PROJECTS, type Project, type RiskLevel } from '../../../shared/data/projects';
+import { fetchProjects } from '../../../shared/api/projects';
+import type { ProjectSummary } from '@taskforge/contracts';
+
+function mapApiToProject(item: ProjectSummary): Project {
+  const initial = item.projectName
+    .split(' ')
+    .slice(0, 2)
+    .map((w: string) => w[0]?.toUpperCase() ?? '')
+    .join('');
+  return {
+    id: String(item.id),
+    code: item.projectCode,
+    name: item.projectName,
+    status: (item.status === 'active' || item.status === 'draft' || item.status === 'completed' || item.status === 'cancelled')
+      ? item.status
+      : 'active',
+    owner: { name: 'Unassigned', initial },
+    team: [],
+    progress: item.progressPercent,
+    dueDate: item.dueDate ?? new Date().toISOString().slice(0, 10),
+    risk: item.priority === 'urgent' || item.priority === 'high' ? 'high' : item.priority === 'medium' ? 'medium' : 'low',
+    summary: ''
+  };
+}
+
+function useProjects() {
+  const [projects, setProjects] = useState<Project[]>(PROJECTS);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    fetchProjects(controller.signal)
+      .then((items) => {
+        setProjects(items.map(mapApiToProject));
+        setError(null);
+      })
+      .catch((err) => {
+        if (err instanceof DOMException && err.name === 'AbortError') return;
+        setError(err.message ?? 'Failed to load projects');
+        // Keep fallback PROJECTS data
+      })
+      .finally(() => setLoading(false));
+    return () => controller.abort();
+  }, []);
+
+  return { projects, loading, error };
+}
 
 export function ProjectsListPage() {
   const route = findRouteByPattern('/projects')!;
-  const active = PROJECTS.filter((p) => p.status === 'active');
-  const other = PROJECTS.filter((p) => p.status !== 'active');
+  const { projects, loading, error } = useProjects();
+  const active = projects.filter((p) => p.status === 'active');
+  const other = projects.filter((p) => p.status !== 'active');
 
   return (
     <RouteScaffold
@@ -20,20 +70,34 @@ export function ProjectsListPage() {
         </Button>
       }
     >
-      <div className="space-y-3">
-        <SectionTitle eyebrow="Portfolio" title={`Active (${active.length})`} />
-        <Card className="overflow-hidden p-0">
-          <ProjectsTable rows={active} />
-        </Card>
-      </div>
-
-      {other.length > 0 && (
-        <div className="mt-8 space-y-3">
-          <SectionTitle eyebrow="Archive" title="Draft · Completed · Cancelled" />
-          <Card className="overflow-hidden p-0">
-            <ProjectsTable rows={other} dimmed />
-          </Card>
+      {loading ? (
+        <div className="flex items-center justify-center py-20">
+          <Loader2 className="h-6 w-6 animate-spin text-primary-500" />
+          <span className="ml-3 text-sm text-slate-500">Loading projects...</span>
         </div>
+      ) : error ? (
+        <EmptyState
+          title="Could not load projects"
+          description={error}
+        />
+      ) : (
+        <>
+          <div className="space-y-3">
+            <SectionTitle eyebrow="Portfolio" title={`Active (${active.length})`} />
+            <Card className="overflow-hidden p-0">
+              <ProjectsTable rows={active} />
+            </Card>
+          </div>
+
+          {other.length > 0 && (
+            <div className="mt-8 space-y-3">
+              <SectionTitle eyebrow="Archive" title="Draft · Completed · Cancelled" />
+              <Card className="overflow-hidden p-0">
+                <ProjectsTable rows={other} dimmed />
+              </Card>
+            </div>
+          )}
+        </>
       )}
     </RouteScaffold>
   );
