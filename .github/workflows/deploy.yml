@@ -1,0 +1,82 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+# Only one deploy at a time
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  # Gate on CI passing first
+  ci-web:
+    name: web — typecheck · test · build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run typecheck -w @taskforge/contracts
+      - run: npm run typecheck -w apps/web
+      - run: npm run test -w apps/web
+      - run: npx vite build
+        working-directory: apps/web
+
+  ci-api:
+    name: api — typecheck · test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run typecheck -w apps/api
+      - run: npm run test -w apps/api
+
+  deploy-web:
+    name: Deploy Web to Vercel
+    needs: [ci-web]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+
+      - name: Pull Vercel environment
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+        working-directory: apps/web
+
+      - name: Build for Vercel
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+        working-directory: apps/web
+
+      - name: Deploy to Vercel
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+        working-directory: apps/web
+
+  deploy-api:
+    name: Deploy API to Fly.io
+    needs: [ci-api]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+
+      - name: Deploy to Fly.io
+        run: flyctl deploy --config apps/api/fly.toml --dockerfile apps/api/Dockerfile --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

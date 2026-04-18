@@ -1,0 +1,12 @@
+node_modules
+*.test.ts
+*.test.js
+.env
+.env.*
+.git
+.github
+.vscode
+design
+docs
+apps/web
+*.md

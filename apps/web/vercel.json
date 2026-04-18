@@ -1,0 +1,8 @@
+{
+  "framework": "vite",
+  "buildCommand": "cd ../.. && npm ci && npm run build -w apps/web",
+  "outputDirectory": "dist",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
