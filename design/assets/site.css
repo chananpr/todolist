@@ -1,0 +1,119 @@
+/* Shared styles across every design page. */
+
+body {
+  font-family: 'Manrope', sans-serif;
+  background: #f8fbff;
+  color: #0f172a;
+  -webkit-font-smoothing: antialiased;
+}
+
+.display { font-family: 'Space Grotesk', sans-serif; }
+
+.eyebrow {
+  font-size: 12px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #1d4ed8;
+}
+
+/* swatch tile */
+.swatch { aspect-ratio: 1.6/1; border-radius: 12px; }
+
+/* device frames for page mockups */
+.frame-desktop {
+  border-radius: 18px;
+  border: 1px solid #e2e8f0;
+  background: #f8fbff;
+  box-shadow: 0 18px 50px -30px rgba(15,23,42,.22);
+  overflow: hidden;
+}
+.frame-desktop .titlebar {
+  background: #f1f5f9;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.frame-desktop .titlebar .dot { width: 10px; height: 10px; border-radius: 999px; background: #cbd5e1; }
+.frame-desktop .titlebar .url {
+  flex: 1;
+  background: white;
+  border-radius: 6px;
+  padding: 3px 10px;
+  font-size: 11px;
+  color: #64748b;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.frame-phone {
+  border-radius: 28px;
+  border: 6px solid #0f172a;
+  background: #0f172a;
+  width: 240px;
+  box-shadow: 0 24px 60px -28px rgba(15,23,42,.4);
+  overflow: hidden;
+}
+.frame-phone .screen {
+  background: #f8fbff;
+  border-radius: 22px;
+  height: 440px;
+  overflow: hidden;
+  position: relative;
+}
+.frame-phone .notch {
+  width: 80px; height: 18px;
+  background: #0f172a;
+  border-radius: 0 0 12px 12px;
+  margin: 0 auto;
+  position: absolute; left: 0; right: 0; top: 0; z-index: 10;
+}
+
+/* live demo card */
+.demo {
+  background: white;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  padding: 24px;
+  box-shadow: 0 12px 30px -18px rgba(37,99,235,.28), 0 8px 18px -16px rgba(148,163,184,.35);
+}
+.demo h4 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+.demo .meta {
+  font-size: 12px;
+  color: #64748b;
+  margin-bottom: 16px;
+}
+.demo + .demo { margin-top: 24px; }
+
+/* code block */
+.code {
+  background: #0f172a;
+  color: #e2e8f0;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  overflow-x: auto;
+  margin-top: 14px;
+}
+
+/* anchor offset for sticky nav */
+section[id] { scroll-margin-top: 90px; }
+
+/* fade in on load */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+main > * { animation: fadeUp .35s ease-out both; }
+main > *:nth-child(2) { animation-delay: .04s; }
+main > *:nth-child(3) { animation-delay: .08s; }
+main > *:nth-child(4) { animation-delay: .12s; }
+main > *:nth-child(5) { animation-delay: .16s; }

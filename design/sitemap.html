@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sitemap · Todolist Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+<script src="assets/tailwind-config.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="assets/site.css" />
+</head>
+<body class="min-h-screen">
+<div id="site-nav"></div>
+
+<main class="max-w-7xl mx-auto px-6 py-10 space-y-12">
+
+  <header>
+    <div class="eyebrow">04 · Routing</div>
+    <h1 class="display text-4xl font-semibold mt-2">Sitemap</h1>
+    <p class="text-slate-600 mt-2 max-w-2xl">เพิ่ม/ย้ายหน้าใหม่ต้องอัปเดต tree นี้ก่อน เพื่อให้โครงเส้นทางทั้งระบบ coherent</p>
+  </header>
+
+  <section class="rounded-2xl bg-white border border-slate-100 p-6 shadow-soft">
+    <div class="eyebrow">Route tree</div>
+    <div class="mermaid mt-4">
+graph TD
+    Root["/ (AppLayout)"] --> Dashboard["/ — Overview"]
+    Root --> Projects["/projects — List"]
+    Projects --> ProjectDetail["/projects/:id — Detail"]
+    ProjectDetail --> Kanban["/projects/:id/board — Kanban"]
+    ProjectDetail --> TaskDrawer["Task Drawer (overlay)"]
+    Root --> AIPlanner["/ai-planner — AI Planner"]
+    AIPlanner --> AIDraft["/ai-planner/:id — Draft review"]
+    Root --> Teams["/teams — Directory"]
+    Teams --> Employee["/teams/:id — Employee"]
+    Root --> KPI["/kpi — Dashboard"]
+    KPI --> KPIDetail["/kpi/:metric — Drilldown"]
+    Root --> Security["/security — Hub"]
+    Security --> Roles["/security/roles"]
+    Security --> Audit["/security/audit"]
+    Auth["/login"] -.-> Root
+    Showcase["/theme (dev only)"]
+    </div>
+  </section>
+
+  <section class="rounded-2xl bg-white border border-slate-100 p-6 shadow-soft">
+    <div class="eyebrow">Information architecture</div>
+    <div class="mermaid mt-4">
+flowchart LR
+    subgraph Execute
+      Dash[Overview] --> Proj[Projects] --> Board[Kanban] --> Task[Task Drawer]
+    end
+    subgraph Plan
+      AI[AI Planner] --> Draft[Draft Review]
+    end
+    subgraph People
+      Teams[Teams] --> Emp[Employee]
+    end
+    subgraph Measure
+      KPI[KPI] --> Metric[Metric Drilldown]
+    end
+    subgraph Govern
+      Sec[Security] --> Roles[Roles]
+      Sec --> Audit[Audit Log]
+    end
+    Execute --> Measure
+    Plan --> Execute
+    People --> Execute
+    Govern -.-> Execute
+    </div>
+  </section>
+
+  <!-- Route table -->
+  <section>
+    <div class="eyebrow">Route inventory</div>
+    <h2 class="display text-2xl font-semibold mt-1">ทุก route พร้อม role + widget</h2>
+    <div class="mt-5 rounded-2xl bg-white border border-slate-100 shadow-soft overflow-hidden">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-50 text-slate-500">
+          <tr>
+            <th class="text-left font-semibold uppercase tracking-wider text-[11px] px-4 h-10">Path</th>
+            <th class="text-left font-semibold uppercase tracking-wider text-[11px] px-4 h-10">Page</th>
+            <th class="text-left font-semibold uppercase tracking-wider text-[11px] px-4 h-10">Widgets</th>
+            <th class="text-left font-semibold uppercase tracking-wider text-[11px] px-4 h-10">Role</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100" id="routes"></tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<div id="site-footer"></div>
+<script src="assets/site.js"></script>
+<script>
+  const ROUTES = [
+    ['/login',                'Login',            'AuthPanel',                                'public'],
+    ['/',                     'Overview',         'HeroPanel · MetricsGrid · BoardPreview · SignalsPanel', 'member+'],
+    ['/projects',             'Projects list',    'FilterBar · ProjectTable',                 'member+'],
+    ['/projects/:id',         'Project detail',   'MilestoneTrack · TeamPanel · RiskBadge',   'member+'],
+    ['/projects/:id/board',   'Kanban board',     'KanbanLanes · TaskCard · DragOverlay',     'member+'],
+    ['/ai-planner',           'AI Planner',       'PromptPanel · DraftList',                  'manager+'],
+    ['/ai-planner/:id',       'Draft review',     'PlanTimeline · RiskSummary · ApplyBar',    'manager+'],
+    ['/teams',                'Team directory',   'PeopleGrid · CapacityStrip',               'manager+'],
+    ['/teams/:id',            'Employee profile', 'WorkloadChart · HistoryFeed',              'manager+'],
+    ['/kpi',                  'KPI dashboard',    'TrendWall · IndicatorCards',               'manager+'],
+    ['/kpi/:metric',          'Metric drilldown', 'TimeseriesChart · Breakdown',              'manager+'],
+    ['/security',             'Security hub',     'AuditSummary · RoleMatrix',                'admin'],
+    ['/security/roles',       'Roles',            'PermissionMatrix',                         'admin'],
+    ['/security/audit',       'Audit log',        'EventTimeline · FilterRail',               'admin'],
+  ];
+  const roleColor = {
+    'public':   'bg-slate-100 text-slate-700',
+    'member+':  'bg-primary-100 text-primary-700',
+    'manager+': 'bg-amber-100 text-amber-700',
+    'admin':    'bg-rose-100 text-rose-700',
+  };
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('routes').innerHTML = ROUTES.map(([p, page, w, role]) => `
+      <tr class="hover:bg-primary-50/40">
+        <td class="px-4 h-12 font-mono text-xs text-primary-700">${p}</td>
+        <td class="px-4 font-semibold">${page}</td>
+        <td class="px-4 text-slate-600 text-xs">${w}</td>
+        <td class="px-4"><span class="rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${roleColor[role]}">${role}</span></td>
+      </tr>
+    `).join('');
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: {
+        primaryColor: '#dbeafe', primaryTextColor: '#1e3a8a', primaryBorderColor: '#2563eb',
+        lineColor: '#2563eb', fontFamily: 'Manrope, sans-serif'
+      }});
+    }
+    if (window.lucide) lucide.createIcons();
+  });
+</script>
+</body>
+</html>

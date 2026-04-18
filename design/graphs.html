@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Graphs · Todolist Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+<script src="assets/tailwind-config.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="assets/site.css" />
+</head>
+<body class="min-h-screen">
+<div id="site-nav"></div>
+
+<main class="max-w-7xl mx-auto px-6 py-10 space-y-10">
+
+  <header>
+    <div class="eyebrow">05 · System</div>
+    <h1 class="display text-4xl font-semibold mt-2">Architecture & flows</h1>
+    <p class="text-slate-600 mt-2 max-w-2xl">Diagram รวมทั้งหมด render จาก Mermaid — เปิดข้างเคียง code ระหว่าง pairing</p>
+  </header>
+
+  <section class="rounded-2xl bg-white border border-slate-100 p-6 shadow-soft">
+    <div class="eyebrow">01</div>
+    <h2 class="display text-xl font-semibold mt-1">System context</h2>
+    <p class="text-sm text-slate-600">ทุก component ใหญ่ของระบบและวิธีที่คุยกัน</p>
+    <div class="mermaid mt-4">
+flowchart LR
+    User((User)) -->|browser| Web[Web App<br/>Vite + React]
+    Web -->|JSON over HTTPS| API[API<br/>Node/Express]
+    API --> DB[(Postgres)]
+    API --> Queue[[Job Queue]]
+    Queue --> AIWorker[AI Planner Worker]
+    AIWorker -->|LLM call| Claude[Claude API]
+    API --> Audit[(Audit Store)]
+    API --> Files[(Object Storage)]
+    </div>
+  </section>
+
+  <section class="rounded-2xl bg-white border border-slate-100 p-6 shadow-soft">
+    <div class="eyebrow">02</div>
+    <h2 class="display text-xl font-semibold mt-1">Frontend module graph</h2>
+    <p class="text-sm text-slate-600">ตามโครง Feature-Sliced: app → pages → widgets → shared</p>
+    <div class="mermaid mt-4">
+flowchart TD
+    main[main.tsx] --> App[app/App.tsx]
+    App --> Router[app/router.tsx]
+    App --> Layout[app/AppLayout.tsx]
+    Layout --> Shell[widgets/layout/AppShell]
+    Router --> Dashboard[pages/dashboard]
+    Router --> Workspace[pages/workspace]
+    Router --> Theme[pages/theme-showcase]
+    Dashboard --> Hero[widgets/dashboard-overview/HeroPanel]
+    Dashboard --> Metrics[widgets/dashboard-overview/MetricsGrid]
+    Dashboard --> Board[widgets/dashboard-overview/BoardPreview]
+    Dashboard --> Signals[widgets/dashboard-overview/SignalsPanel]
+    Hero --> Badge[shared/ui/Badge]
+    Dashboard --> DashAPI[shared/api/dashboard]
+    </div>
+  </section>
+
+  <section class="rounded-2xl bg-white border border-slate-100 p-6 shadow-soft">
+    <div class="eyebrow">03</div>
+    <h2 class="display text-xl font-semibold mt-1">Task update flow</h2>
+    <p class="text-sm text-slate-600">Drag card → optimistic update → audit log → rollback ถ้า error</p>
+    <div class="mermaid mt-4">
+sequenceDiagram
+    actor U as User
+    participant UI as Kanban Card
+    participant Store as React Query Cache
+    participant API as /tasks/:id
+    participant DB as Postgres
+    participant Audit as Audit Log
+
+    U->>UI: drag card -> Review
+    UI->>Store: optimistic update
+    UI->>API: PATCH status=review
+    API->>DB: UPDATE tasks
+    API->>Audit: INSERT event
+    API-->>UI: 200 OK
+    alt error
+      API-->>UI: 4xx/5xx
+      UI->>Store: rollback
+      UI-->>U: toast error
+    end
+    </div>
+  </section>
+
+  <section class="rounded-2xl bg-white border border-slate-100 p-6 shadow-soft">
+    <div class="eyebrow">04</div>
+    <h2 class="display text-xl font-semibold mt-1">AI Planner flow</h2>
+    <p class="text-sm text-slate-600">Prompt → queue → worker → Claude → draft รอ review ก่อน apply</p>
+    <div class="mermaid mt-4">
+sequenceDiagram
+    actor U as Manager
+    participant UI as AI Planner
+    participant API as /ai/plans
+    participant Q as Queue
+    participant W as Worker
+    participant L as Claude API
+    participant DB as Postgres
+
+    U->>UI: prompt + context
+    UI->>API: POST /ai/plans
+    API->>Q: enqueue job
+    API-->>UI: 202 draftId
+    Q->>W: dequeue
+    W->>L: structured call
+    L-->>W: draft plan
+    W->>DB: save draft (pending_review)
+    W-->>UI: ws "draft.ready"
+    U->>UI: review draft
+    U->>API: POST /ai/plans/:id/apply
+    API->>DB: create tasks
+    API-->>UI: success
+    </div>
+  </section>
+
+  <section class="rounded-2xl bg-white border border-slate-100 p-6 shadow-soft">
+    <div class="eyebrow">05</div>
+    <h2 class="display text-xl font-semibold mt-1">Daily user journey</h2>
+    <div class="mermaid mt-4">
+journey
+    title Daily flow for a team lead
+    section Morning
+      Open Overview: 5: User
+      Scan risks/signals: 4: User
+      Triage blocked tasks: 3: User
+    section Mid-day
+      Move cards on Kanban: 4: User
+      Review AI draft: 3: User
+      Apply plan: 4: User
+    section Afternoon
+      Check KPI trend: 4: User
+      Leave note on task: 5: User
+    </div>
+  </section>
+
+  <section class="rounded-2xl bg-white border border-slate-100 p-6 shadow-soft">
+    <div class="eyebrow">06</div>
+    <h2 class="display text-xl font-semibold mt-1">Role & permission</h2>
+    <div class="mermaid mt-4">
+flowchart LR
+    Admin[Admin] --> All[All routes]
+    Manager[Manager] --> Plan[AI Planner]
+    Manager --> Teams
+    Manager --> KPI
+    Manager --> Projects
+    Member[Member] --> Projects
+    Member --> Dashboard
+    Member --> OwnTasks[My tasks]
+    Viewer[Viewer] --> Dashboard
+    Viewer -.read-only.-> Projects
+    </div>
+  </section>
+
+  <section class="rounded-2xl bg-white border border-slate-100 p-6 shadow-soft">
+    <div class="eyebrow">07</div>
+    <h2 class="display text-xl font-semibold mt-1">Deployment topology</h2>
+    <div class="mermaid mt-4">
+flowchart TB
+    subgraph CDN
+      Static[Vite build static assets]
+    end
+    subgraph Edge
+      LB[Load balancer / TLS]
+    end
+    subgraph App Tier
+      Web1[web-1]
+      Web2[web-2]
+      API1[api-1]
+      API2[api-2]
+    end
+    subgraph Data Tier
+      PG[(Postgres primary)]
+      PGR[(Postgres read replica)]
+      Redis[(Redis queue + cache)]
+      S3[(Object store)]
+    end
+    Client --> CDN
+    Client --> LB --> Web1 & Web2
+    Web1 --> API1
+    Web2 --> API2
+    API1 --> PG
+    API2 --> PG
+    API1 --> Redis
+    API2 --> Redis
+    API1 --> S3
+    </div>
+  </section>
+
+</main>
+
+<div id="site-footer"></div>
+<script src="assets/site.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    if (window.mermaid) {
+      mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: {
+        primaryColor: '#dbeafe',
+        primaryTextColor: '#1e3a8a',
+        primaryBorderColor: '#2563eb',
+        lineColor: '#2563eb',
+        secondaryColor: '#eff6ff',
+        tertiaryColor: '#f8fbff',
+        fontFamily: 'Manrope, sans-serif'
+      }});
+    }
+    if (window.lucide) lucide.createIcons();
+  });
+</script>
+</body>
+</html>

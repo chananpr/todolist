@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Todolist · Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+<script src="assets/tailwind-config.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<link rel="stylesheet" href="assets/site.css" />
+</head>
+<body class="min-h-screen">
+<div id="site-nav"></div>
+
+<main class="max-w-7xl mx-auto px-6 py-10 space-y-12">
+
+  <!-- Hero -->
+  <section class="rounded-3xl bg-gradient-to-br from-primary-700 via-primary-800 to-primary-950 text-white p-10 md:p-14 shadow-panel relative overflow-hidden">
+    <div class="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-primary-400/30 blur-3xl"></div>
+    <div class="absolute -bottom-24 -left-24 h-96 w-96 rounded-full bg-primary-500/20 blur-3xl"></div>
+
+    <div class="relative">
+      <div class="eyebrow text-primary-200">Single source of truth</div>
+      <h1 class="display text-4xl md:text-6xl font-semibold mt-3 max-w-4xl leading-[1.05]">
+        ออกแบบครั้งเดียว ใช้ทั้งทีม
+      </h1>
+      <p class="mt-5 text-primary-100 text-lg max-w-2xl">
+        Live design system สำหรับ Todolist — เปิดดูได้ทันทีเพื่อสื่อสารกับทีมว่า component, สี, layout, และ flow ของแต่ละหน้าควรเป็นอย่างไร
+      </p>
+
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="components.html" class="rounded-md bg-white text-primary-800 px-5 h-11 inline-flex items-center font-semibold shadow-soft hover:shadow-hover transition">
+          <i data-lucide="layers" class="h-4 w-4 mr-2"></i> Browse components
+        </a>
+        <a href="pages.html" class="rounded-md border border-white/30 text-white px-5 h-11 inline-flex items-center font-semibold hover:bg-white/10 transition">
+          <i data-lucide="layout-grid" class="h-4 w-4 mr-2"></i> Page mockups
+        </a>
+        <a href="sitemap.html" class="rounded-md border border-white/30 text-white px-5 h-11 inline-flex items-center font-semibold hover:bg-white/10 transition">
+          <i data-lucide="git-branch" class="h-4 w-4 mr-2"></i> Sitemap
+        </a>
+      </div>
+
+      <div class="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl">
+        <div class="rounded-xl bg-white/10 backdrop-blur p-4 border border-white/10">
+          <div class="display text-3xl font-semibold">12</div>
+          <div class="text-xs text-primary-100 mt-1">หน้าหลัก</div>
+        </div>
+        <div class="rounded-xl bg-white/10 backdrop-blur p-4 border border-white/10">
+          <div class="display text-3xl font-semibold">30+</div>
+          <div class="text-xs text-primary-100 mt-1">component</div>
+        </div>
+        <div class="rounded-xl bg-white/10 backdrop-blur p-4 border border-white/10">
+          <div class="display text-3xl font-semibold">11</div>
+          <div class="text-xs text-primary-100 mt-1">color steps</div>
+        </div>
+        <div class="rounded-xl bg-white/10 backdrop-blur p-4 border border-white/10">
+          <div class="display text-3xl font-semibold">7</div>
+          <div class="text-xs text-primary-100 mt-1">flow diagrams</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section grid -->
+  <section>
+    <div class="eyebrow">Explore</div>
+    <h2 class="display text-3xl font-semibold mt-2">เริ่มต้นจากตรงไหนก็ได้</h2>
+    <p class="text-slate-600 mt-2">ทุกหน้าเชื่อมต่อกัน — เปิดข้างเคียงกันเพื่อใช้ระหว่าง pairing หรือ design review</p>
+
+    <div class="mt-6 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+      <a href="tokens.html" class="group rounded-2xl bg-white border border-slate-100 p-6 shadow-soft hover:shadow-hover hover:-translate-y-0.5 transition block">
+        <div class="flex items-center gap-3">
+          <div class="h-10 w-10 rounded-lg bg-primary-100 text-primary-700 flex items-center justify-center"><i data-lucide="palette" class="h-5 w-5"></i></div>
+          <div>
+            <div class="eyebrow">01</div>
+            <div class="display text-lg font-semibold">Tokens</div>
+          </div>
+        </div>
+        <p class="text-sm text-slate-600 mt-3">สี · typography · shadow · radius · motion</p>
+        <div class="mt-4 flex gap-1">
+          <span class="h-3 flex-1 rounded bg-primary-200"></span>
+          <span class="h-3 flex-1 rounded bg-primary-400"></span>
+          <span class="h-3 flex-1 rounded bg-primary-600"></span>
+          <span class="h-3 flex-1 rounded bg-primary-800"></span>
+          <span class="h-3 flex-1 rounded bg-primary-950"></span>
+        </div>
+      </a>
+
+      <a href="components.html" class="group rounded-2xl bg-white border border-slate-100 p-6 shadow-soft hover:shadow-hover hover:-translate-y-0.5 transition block">
+        <div class="flex items-center gap-3">
+          <div class="h-10 w-10 rounded-lg bg-primary-100 text-primary-700 flex items-center justify-center"><i data-lucide="layers" class="h-5 w-5"></i></div>
+          <div>
+            <div class="eyebrow">02</div>
+            <div class="display text-lg font-semibold">Components</div>
+          </div>
+        </div>
+        <p class="text-sm text-slate-600 mt-3">Live demo — buttons · cards · forms · kanban · tables · feedback</p>
+        <div class="mt-4 flex gap-2">
+          <span class="rounded-md bg-primary-600 text-white text-xs font-semibold h-7 px-2.5 inline-flex items-center">Primary</span>
+          <span class="rounded-full bg-emerald-100 text-emerald-700 text-xs font-semibold h-7 px-2.5 inline-flex items-center">Success</span>
+          <span class="rounded-full bg-amber-100 text-amber-700 text-xs font-semibold h-7 px-2.5 inline-flex items-center">Warning</span>
+        </div>
+      </a>
+
+      <a href="pages.html" class="group rounded-2xl bg-white border border-slate-100 p-6 shadow-soft hover:shadow-hover hover:-translate-y-0.5 transition block">
+        <div class="flex items-center gap-3">
+          <div class="h-10 w-10 rounded-lg bg-primary-100 text-primary-700 flex items-center justify-center"><i data-lucide="layout-grid" class="h-5 w-5"></i></div>
+          <div>
+            <div class="eyebrow">03</div>
+            <div class="display text-lg font-semibold">Pages</div>
+          </div>
+        </div>
+        <p class="text-sm text-slate-600 mt-3">Mockup ใน frame desktop และ mobile ของทุก route</p>
+        <div class="mt-4 grid grid-cols-3 gap-1">
+          <div class="h-12 rounded bg-primary-100"></div>
+          <div class="h-12 rounded bg-primary-200"></div>
+          <div class="h-12 rounded bg-primary-300"></div>
+        </div>
+      </a>
+
+      <a href="sitemap.html" class="group rounded-2xl bg-white border border-slate-100 p-6 shadow-soft hover:shadow-hover hover:-translate-y-0.5 transition block">
+        <div class="flex items-center gap-3">
+          <div class="h-10 w-10 rounded-lg bg-primary-100 text-primary-700 flex items-center justify-center"><i data-lucide="git-branch" class="h-5 w-5"></i></div>
+          <div>
+            <div class="eyebrow">04</div>
+            <div class="display text-lg font-semibold">Sitemap</div>
+          </div>
+        </div>
+        <p class="text-sm text-slate-600 mt-3">Route tree, IA และความสัมพันธ์ระหว่างหน้า</p>
+      </a>
+
+      <a href="graphs.html" class="group rounded-2xl bg-white border border-slate-100 p-6 shadow-soft hover:shadow-hover hover:-translate-y-0.5 transition block">
+        <div class="flex items-center gap-3">
+          <div class="h-10 w-10 rounded-lg bg-primary-100 text-primary-700 flex items-center justify-center"><i data-lucide="workflow" class="h-5 w-5"></i></div>
+          <div>
+            <div class="eyebrow">05</div>
+            <div class="display text-lg font-semibold">Graphs</div>
+          </div>
+        </div>
+        <p class="text-sm text-slate-600 mt-3">Architecture · sequence · journey · deployment</p>
+      </a>
+
+      <a href="icons.html" class="group rounded-2xl bg-white border border-slate-100 p-6 shadow-soft hover:shadow-hover hover:-translate-y-0.5 transition block">
+        <div class="flex items-center gap-3">
+          <div class="h-10 w-10 rounded-lg bg-primary-100 text-primary-700 flex items-center justify-center"><i data-lucide="sparkles" class="h-5 w-5"></i></div>
+          <div>
+            <div class="eyebrow">06</div>
+            <div class="display text-lg font-semibold">Icons</div>
+          </div>
+        </div>
+        <p class="text-sm text-slate-600 mt-3">Lucide gallery — search ได้ พร้อมหมวดหมู่</p>
+        <div class="mt-4 flex gap-2 text-primary-700">
+          <i data-lucide="layout-dashboard" class="h-5 w-5"></i>
+          <i data-lucide="users" class="h-5 w-5"></i>
+          <i data-lucide="bar-chart-3" class="h-5 w-5"></i>
+          <i data-lucide="brain-circuit" class="h-5 w-5"></i>
+          <i data-lucide="shield-check" class="h-5 w-5"></i>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- How team uses it -->
+  <section>
+    <div class="eyebrow">Workflow</div>
+    <h2 class="display text-3xl font-semibold mt-2">ทีมใช้ site นี้ยังไง</h2>
+    <div class="mt-6 grid md:grid-cols-3 gap-5">
+      <div class="rounded-2xl bg-white border border-slate-100 p-6 shadow-soft">
+        <div class="h-9 w-9 rounded-lg bg-primary-600 text-white flex items-center justify-center font-semibold">1</div>
+        <h3 class="display text-lg font-semibold mt-4">Design review</h3>
+        <p class="text-sm text-slate-600 mt-2">เปิด <code class="bg-slate-100 px-1 rounded">pages.html</code> ระหว่างประชุม เพื่อ review layout และจัด priority หน้า</p>
+      </div>
+      <div class="rounded-2xl bg-white border border-slate-100 p-6 shadow-soft">
+        <div class="h-9 w-9 rounded-lg bg-primary-600 text-white flex items-center justify-center font-semibold">2</div>
+        <h3 class="display text-lg font-semibold mt-4">Implementation pairing</h3>
+        <p class="text-sm text-slate-600 mt-2">นัก dev เปิด <code class="bg-slate-100 px-1 rounded">components.html</code> ข้าง editor — copy markup/class ไปใช้ได้เลย</p>
+      </div>
+      <div class="rounded-2xl bg-white border border-slate-100 p-6 shadow-soft">
+        <div class="h-9 w-9 rounded-lg bg-primary-600 text-white flex items-center justify-center font-semibold">3</div>
+        <h3 class="display text-lg font-semibold mt-4">Onboard คนใหม่</h3>
+        <p class="text-sm text-slate-600 mt-2">ให้สมาชิกใหม่อ่าน <code class="bg-slate-100 px-1 rounded">sitemap.html</code> และ <code class="bg-slate-100 px-1 rounded">graphs.html</code> เพื่อเข้าใจระบบใน 30 นาที</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick start -->
+  <section class="rounded-2xl bg-brand-ink text-white p-8 md:p-10">
+    <div class="eyebrow text-primary-300">Quick start</div>
+    <h2 class="display text-2xl font-semibold mt-2">เปิด site นี้ให้ทีม</h2>
+    <div class="mt-6 grid md:grid-cols-2 gap-6">
+      <div>
+        <div class="text-sm text-slate-300">รันบนเครื่องตัวเอง</div>
+        <pre class="code mt-2"># จาก root project
+npm run design
+
+# หรือ
+cd design && python3 -m http.server 8080
+# เปิด http://localhost:8080</pre>
+      </div>
+      <div>
+        <div class="text-sm text-slate-300">แชร์ให้ทีม</div>
+        <pre class="code mt-2"># ใช้ ngrok / cloudflared / tailscale
+cloudflared tunnel --url http://localhost:8080
+
+# หรือ deploy เป็น static site
+# (ทุกไฟล์ใน design/ คือ static)</pre>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div id="site-footer"></div>
+<script src="assets/site.js"></script>
+<script>document.addEventListener('DOMContentLoaded', () => window.lucide && lucide.createIcons());</script>
+</body>
+</html>

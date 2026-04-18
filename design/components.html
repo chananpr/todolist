@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Components · Todolist Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+<script src="assets/tailwind-config.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<link rel="stylesheet" href="assets/site.css" />
+</head>
+<body class="min-h-screen">
+<div id="site-nav"></div>
+
+<main class="max-w-7xl mx-auto px-6 py-10 space-y-12">
+
+  <header>
+    <div class="eyebrow">02 · Building blocks</div>
+    <h1 class="display text-4xl font-semibold mt-2">Components</h1>
+    <p class="text-slate-600 mt-2 max-w-2xl">Live demo — ใช้งานได้จริง hover/click ได้ พร้อม class ของ Tailwind ที่ควรใช้</p>
+  </header>
+
+  <!-- Sub-nav -->
+  <nav class="rounded-2xl bg-white border border-slate-100 p-3 shadow-soft sticky top-20 z-30 overflow-x-auto">
+    <div class="flex items-center gap-1 min-w-max text-sm font-medium">
+      <a href="#buttons" class="px-3 h-9 inline-flex items-center rounded-md text-slate-600 hover:bg-primary-50 hover:text-primary-700">Buttons</a>
+      <a href="#badges" class="px-3 h-9 inline-flex items-center rounded-md text-slate-600 hover:bg-primary-50 hover:text-primary-700">Badges</a>
+      <a href="#inputs" class="px-3 h-9 inline-flex items-center rounded-md text-slate-600 hover:bg-primary-50 hover:text-primary-700">Inputs</a>
+      <a href="#cards" class="px-3 h-9 inline-flex items-center rounded-md text-slate-600 hover:bg-primary-50 hover:text-primary-700">Cards</a>
+      <a href="#stats" class="px-3 h-9 inline-flex items-center rounded-md text-slate-600 hover:bg-primary-50 hover:text-primary-700">Stats</a>
+      <a href="#kanban" class="px-3 h-9 inline-flex items-center rounded-md text-slate-600 hover:bg-primary-50 hover:text-primary-700">Kanban</a>
+      <a href="#table" class="px-3 h-9 inline-flex items-center rounded-md text-slate-600 hover:bg-primary-50 hover:text-primary-700">Table</a>
+      <a href="#avatars" class="px-3 h-9 inline-flex items-center rounded-md text-slate-600 hover:bg-primary-50 hover:text-primary-700">Avatars</a>
+      <a href="#timeline" class="px-3 h-9 inline-flex items-center rounded-md text-slate-600 hover:bg-primary-50 hover:text-primary-700">Timeline</a>
+      <a href="#toasts" class="px-3 h-9 inline-flex items-center rounded-md text-slate-600 hover:bg-primary-50 hover:text-primary-700">Feedback</a>
+      <a href="#nav" class="px-3 h-9 inline-flex items-center rounded-md text-slate-600 hover:bg-primary-50 hover:text-primary-700">App shell</a>
+    </div>
+  </nav>
+
+  <!-- BUTTONS -->
+  <section id="buttons" class="demo">
+    <h4>Buttons</h4>
+    <div class="meta">Primary CTA → Secondary → Ghost. อย่าใช้ color นอก palette</div>
+    <div class="flex flex-wrap gap-3 items-center">
+      <button class="h-10 px-4 rounded-md bg-primary-600 text-white font-semibold hover:bg-primary-700 shadow-soft transition">Primary</button>
+      <button class="h-10 px-4 rounded-md bg-white border border-primary-200 text-primary-700 font-semibold hover:bg-primary-50 transition">Secondary</button>
+      <button class="h-10 px-4 rounded-md text-primary-600 font-semibold hover:bg-primary-50 transition">Ghost</button>
+      <button class="h-10 px-4 rounded-md bg-rose-600 text-white font-semibold hover:bg-rose-700 transition">Danger</button>
+      <button disabled class="h-10 px-4 rounded-md bg-slate-100 text-slate-400 font-semibold cursor-not-allowed">Disabled</button>
+      <button class="h-10 px-4 rounded-md bg-primary-600 text-white font-semibold inline-flex items-center gap-2 shadow-soft hover:bg-primary-700 transition">
+        <i data-lucide="plus" class="h-4 w-4"></i> With icon
+      </button>
+      <button class="h-10 w-10 rounded-md bg-primary-600 text-white inline-flex items-center justify-center shadow-soft hover:bg-primary-700 transition" aria-label="add">
+        <i data-lucide="plus" class="h-4 w-4"></i>
+      </button>
+    </div>
+    <div class="mt-5 flex flex-wrap gap-3 items-center">
+      <span class="text-xs font-semibold text-slate-500 mr-1">Sizes:</span>
+      <button class="h-8 px-3 text-xs rounded-md bg-primary-600 text-white font-semibold">sm</button>
+      <button class="h-10 px-4 rounded-md bg-primary-600 text-white font-semibold">md</button>
+      <button class="h-12 px-6 rounded-md bg-primary-600 text-white font-semibold">lg</button>
+    </div>
+    <pre class="code">&lt;button class="h-10 px-4 rounded-md bg-primary-600 text-white font-semibold hover:bg-primary-700 shadow-soft transition"&gt;Primary&lt;/button&gt;</pre>
+  </section>
+
+  <!-- BADGES -->
+  <section id="badges" class="demo">
+    <h4>Badges & chips</h4>
+    <div class="meta">ทรงกลม · เน้นสถานะ · ทุกสีมาจาก semantic palette</div>
+    <div class="flex flex-wrap gap-2">
+      <span class="rounded-full px-2.5 py-0.5 text-xs font-semibold bg-slate-100 text-slate-700">Neutral</span>
+      <span class="rounded-full px-2.5 py-0.5 text-xs font-semibold bg-primary-100 text-primary-700">Info</span>
+      <span class="rounded-full px-2.5 py-0.5 text-xs font-semibold bg-emerald-100 text-emerald-700">Success</span>
+      <span class="rounded-full px-2.5 py-0.5 text-xs font-semibold bg-amber-100 text-amber-700">Warning</span>
+      <span class="rounded-full px-2.5 py-0.5 text-xs font-semibold bg-rose-100 text-rose-700">Danger</span>
+      <span class="rounded-full px-2.5 py-0.5 text-xs font-semibold bg-sky-100 text-sky-700">In progress</span>
+    </div>
+    <div class="mt-4 flex flex-wrap gap-2">
+      <span class="rounded-full px-2.5 py-0.5 text-xs font-semibold bg-emerald-100 text-emerald-700 inline-flex items-center gap-1"><span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>Live</span>
+      <span class="rounded-full px-2.5 py-0.5 text-xs font-semibold bg-amber-100 text-amber-700 inline-flex items-center gap-1"><i data-lucide="triangle-alert" class="h-3 w-3"></i>At risk</span>
+      <span class="rounded-full px-2.5 py-0.5 text-xs font-semibold bg-rose-100 text-rose-700 inline-flex items-center gap-1"><i data-lucide="circle-alert" class="h-3 w-3"></i>Blocked</span>
+    </div>
+  </section>
+
+  <!-- INPUTS -->
+  <section id="inputs" class="demo">
+    <h4>Form controls</h4>
+    <div class="meta">Focus ring ใช้ primary-500/30 · error ใช้ rose-500</div>
+    <div class="grid md:grid-cols-3 gap-5">
+      <label class="text-sm font-medium">
+        <span class="text-slate-700">Project name</span>
+        <input class="mt-1 h-10 w-full rounded-md border border-slate-200 px-3 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/30 outline-none" placeholder="e.g. Phoenix launch" />
+        <span class="text-[11px] text-slate-500 mt-1 block">ชื่อที่จะแสดงบน dashboard</span>
+      </label>
+      <label class="text-sm font-medium">
+        <span class="text-slate-700">Email</span>
+        <input class="mt-1 h-10 w-full rounded-md border border-rose-500 px-3 focus:ring-2 focus:ring-rose-500/30 outline-none" value="alice@" />
+        <span class="text-[11px] text-rose-600 mt-1 block">Invalid email format</span>
+      </label>
+      <label class="text-sm font-medium">
+        <span class="text-slate-700">Read only</span>
+        <input disabled class="mt-1 h-10 w-full rounded-md border border-slate-200 bg-slate-50 text-slate-400 px-3" value="TASK-0048" />
+      </label>
+      <label class="text-sm font-medium md:col-span-2">
+        <span class="text-slate-700">Description</span>
+        <textarea rows="3" class="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/30 outline-none" placeholder="What should ship?"></textarea>
+      </label>
+      <label class="text-sm font-medium">
+        <span class="text-slate-700">Status</span>
+        <select class="mt-1 h-10 w-full rounded-md border border-slate-200 px-3 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/30 outline-none">
+          <option>Backlog</option><option>In progress</option><option>Review</option><option>Done</option>
+        </select>
+      </label>
+    </div>
+    <div class="mt-5 flex flex-wrap gap-5 items-center">
+      <label class="inline-flex items-center gap-2 text-sm"><input type="checkbox" class="h-4 w-4 rounded border-slate-300 text-primary-600 focus:ring-primary-500" checked> Include subtasks</label>
+      <label class="inline-flex items-center gap-2 text-sm"><input type="radio" name="p" class="h-4 w-4 text-primary-600 focus:ring-primary-500" checked> Low</label>
+      <label class="inline-flex items-center gap-2 text-sm"><input type="radio" name="p" class="h-4 w-4 text-primary-600 focus:ring-primary-500"> High</label>
+      <label class="inline-flex items-center gap-2 text-sm cursor-pointer">
+        <span class="relative inline-block h-5 w-9">
+          <input type="checkbox" class="peer sr-only" checked>
+          <span class="absolute inset-0 rounded-full bg-slate-300 peer-checked:bg-primary-600 transition"></span>
+          <span class="absolute top-0.5 left-0.5 h-4 w-4 rounded-full bg-white transition peer-checked:translate-x-4"></span>
+        </span>
+        Notify assignee
+      </label>
+    </div>
+  </section>
+
+  <!-- CARDS -->
+  <section id="cards" class="demo">
+    <h4>Card variants</h4>
+    <div class="meta">Default · Hero · Metric · Ghost</div>
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div class="rounded-xl bg-white shadow-soft border border-slate-100 p-5">
+        <div class="eyebrow">Default</div>
+        <div class="display font-semibold mt-2 text-lg">Card title</div>
+        <p class="text-sm text-slate-600 mt-1">เนื้อหาทั่วไป</p>
+      </div>
+      <div class="rounded-xl bg-gradient-to-br from-primary-700 to-primary-950 text-white shadow-panel p-5 relative overflow-hidden">
+        <div class="absolute -top-6 -right-6 h-20 w-20 rounded-full bg-primary-400/30 blur-2xl"></div>
+        <div class="eyebrow text-primary-200">Hero</div>
+        <div class="display font-semibold mt-2 text-lg">Phoenix launch</div>
+        <p class="text-sm text-primary-100 mt-1">Gradient + glow</p>
+      </div>
+      <div class="rounded-xl bg-white shadow-soft p-5 border-t-4 border-primary-500">
+        <div class="eyebrow">Metric</div>
+        <div class="display font-semibold mt-2 text-3xl">72%</div>
+        <div class="text-xs text-emerald-600 font-semibold mt-1">▲ 4 pts</div>
+      </div>
+      <div class="rounded-xl border-2 border-dashed border-primary-200 bg-primary-50/40 p-5 text-center">
+        <div class="h-9 w-9 rounded-full bg-white flex items-center justify-center mx-auto text-primary-600 shadow-soft">
+          <i data-lucide="plus"></i>
+        </div>
+        <div class="display font-semibold mt-2 text-sm">Ghost / Empty</div>
+        <p class="text-xs text-slate-500">Add new item</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STAT CARDS -->
+  <section id="stats" class="demo">
+    <h4>Stat cards</h4>
+    <div class="meta">ใช้บน dashboard — eyebrow + number + trend</div>
+    <div class="grid md:grid-cols-4 gap-5">
+      <div class="rounded-xl bg-white p-5 shadow-soft border-t-4 border-primary-500">
+        <div class="eyebrow">Active projects</div>
+        <div class="display text-3xl font-semibold mt-2">18</div>
+        <div class="text-xs text-emerald-600 mt-1 font-semibold inline-flex items-center gap-1"><i data-lucide="trending-up" class="h-3.5 w-3.5"></i>12% vs last week</div>
+      </div>
+      <div class="rounded-xl bg-white p-5 shadow-soft border-t-4 border-emerald-500">
+        <div class="eyebrow">On-track</div>
+        <div class="display text-3xl font-semibold mt-2">72%</div>
+        <div class="text-xs text-emerald-600 mt-1 font-semibold inline-flex items-center gap-1"><i data-lucide="trending-up" class="h-3.5 w-3.5"></i>4 pts</div>
+      </div>
+      <div class="rounded-xl bg-white p-5 shadow-soft border-t-4 border-amber-500">
+        <div class="eyebrow">At risk</div>
+        <div class="display text-3xl font-semibold mt-2">6</div>
+        <div class="text-xs text-amber-600 mt-1 font-semibold inline-flex items-center gap-1"><i data-lucide="triangle-alert" class="h-3.5 w-3.5"></i>2 this week</div>
+      </div>
+      <div class="rounded-xl bg-white p-5 shadow-soft border-t-4 border-rose-500">
+        <div class="eyebrow">Blocked</div>
+        <div class="display text-3xl font-semibold mt-2">3</div>
+        <div class="text-xs text-rose-600 mt-1 font-semibold inline-flex items-center gap-1"><i data-lucide="circle-alert" class="h-3.5 w-3.5"></i>needs review</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KANBAN -->
+  <section id="kanban" class="demo">
+    <h4>Kanban board & card</h4>
+    <div class="meta">Lane width 300px · card hover = lift + shadow-hover</div>
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <!-- lane template -->
+      <div class="rounded-xl bg-slate-50 border border-slate-100 p-3">
+        <div class="flex items-center justify-between mb-3">
+          <div class="eyebrow">Backlog</div>
+          <span class="text-xs font-semibold text-slate-500">3</span>
+        </div>
+        <div class="space-y-2">
+          <div class="rounded-lg bg-white shadow-soft border border-slate-100 p-3 hover:shadow-hover hover:-translate-y-0.5 transition cursor-grab">
+            <div class="flex items-start justify-between">
+              <div class="text-sm font-semibold">Draft comms plan</div>
+              <span class="h-2 w-2 rounded-full bg-amber-500 mt-1.5" title="med"></span>
+            </div>
+            <div class="mt-2 flex items-center justify-between">
+              <div class="flex -space-x-1.5">
+                <div class="h-6 w-6 rounded-full bg-primary-200 ring-2 ring-white flex items-center justify-center text-[10px] font-bold text-primary-800">AN</div>
+                <div class="h-6 w-6 rounded-full bg-primary-300 ring-2 ring-white flex items-center justify-center text-[10px] font-bold text-primary-900">KW</div>
+              </div>
+              <span class="text-[10px] font-semibold text-slate-500">Fri</span>
+            </div>
+          </div>
+          <div class="rounded-lg bg-white shadow-soft border border-slate-100 p-3 hover:shadow-hover hover:-translate-y-0.5 transition cursor-grab">
+            <div class="text-sm font-semibold">Review rollout list</div>
+            <div class="mt-2 flex items-center justify-between">
+              <div class="flex -space-x-1.5"><div class="h-6 w-6 rounded-full bg-primary-200 ring-2 ring-white flex items-center justify-center text-[10px] font-bold">PM</div></div>
+              <span class="text-[10px] font-semibold text-slate-500">Mon</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-xl bg-slate-50 border border-slate-100 p-3">
+        <div class="flex items-center justify-between mb-3">
+          <div class="eyebrow">In progress</div>
+          <span class="text-xs font-semibold text-slate-500">2</span>
+        </div>
+        <div class="space-y-2">
+          <div class="rounded-lg bg-white shadow-soft border border-slate-100 p-3 hover:shadow-hover hover:-translate-y-0.5 transition cursor-grab">
+            <div class="flex items-start justify-between">
+              <div class="text-sm font-semibold">API rate limits</div>
+              <span class="h-2 w-2 rounded-full bg-rose-500 mt-1.5" title="high"></span>
+            </div>
+            <div class="mt-2 flex items-center justify-between">
+              <div class="flex -space-x-1.5">
+                <div class="h-6 w-6 rounded-full bg-primary-200 ring-2 ring-white flex items-center justify-center text-[10px] font-bold">JT</div>
+                <div class="h-6 w-6 rounded-full bg-slate-200 ring-2 ring-white flex items-center justify-center text-[10px] font-bold">+2</div>
+              </div>
+              <span class="rounded-full bg-amber-100 text-amber-700 text-[10px] font-semibold px-2 py-0.5">Wed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-xl bg-slate-50 border border-slate-100 p-3">
+        <div class="flex items-center justify-between mb-3">
+          <div class="eyebrow">Review</div>
+          <span class="text-xs font-semibold text-slate-500">1</span>
+        </div>
+        <div class="space-y-2">
+          <div class="rounded-lg bg-white shadow-soft border border-slate-100 p-3 hover:shadow-hover hover:-translate-y-0.5 transition cursor-grab">
+            <div class="text-sm font-semibold">Docs pass</div>
+            <div class="mt-2 flex items-center justify-between">
+              <div class="flex -space-x-1.5"><div class="h-6 w-6 rounded-full bg-primary-300 ring-2 ring-white flex items-center justify-center text-[10px] font-bold">LR</div></div>
+              <span class="text-[10px] font-semibold text-slate-500">Today</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rounded-xl bg-slate-50 border border-slate-100 p-3">
+        <div class="flex items-center justify-between mb-3">
+          <div class="eyebrow">Done</div>
+          <span class="text-xs font-semibold text-slate-500">1</span>
+        </div>
+        <div class="space-y-2">
+          <div class="rounded-lg bg-white shadow-soft border border-slate-100 p-3 opacity-70">
+            <div class="text-sm font-semibold line-through text-slate-500">Kick-off call</div>
+            <div class="mt-2 text-[10px] text-emerald-600 font-semibold inline-flex items-center gap-1"><i data-lucide="check" class="h-3 w-3"></i>Closed</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TABLE -->
+  <section id="table" class="demo">
+    <h4>Data table</h4>
+    <div class="meta">Header uppercase · row 56px · hover tint primary-50/40</div>
+    <div class="rounded-xl border border-slate-100 overflow-hidden">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-50 text-slate-500">
+          <tr>
+            <th class="text-left font-semibold uppercase tracking-wider text-[11px] px-4 h-10">Project</th>
+            <th class="text-left font-semibold uppercase tracking-wider text-[11px] px-4 h-10">Owner</th>
+            <th class="text-left font-semibold uppercase tracking-wider text-[11px] px-4 h-10">Status</th>
+            <th class="text-left font-semibold uppercase tracking-wider text-[11px] px-4 h-10">Due</th>
+            <th class="text-right font-semibold uppercase tracking-wider text-[11px] px-4 h-10">Progress</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+          <tr class="hover:bg-primary-50/40 transition">
+            <td class="px-4 h-14 font-semibold">Phoenix launch</td>
+            <td class="px-4">Arunee N.</td>
+            <td class="px-4"><span class="rounded-full px-2.5 py-0.5 text-xs font-semibold bg-emerald-100 text-emerald-700">On track</span></td>
+            <td class="px-4 text-slate-600">Apr 22</td>
+            <td class="px-4 text-right"><div class="inline-flex items-center gap-2"><div class="h-1.5 w-24 rounded-full bg-slate-100 overflow-hidden"><div class="h-full bg-primary-600" style="width:72%"></div></div><span class="text-xs font-semibold">72%</span></div></td>
+          </tr>
+          <tr class="hover:bg-primary-50/40 transition">
+            <td class="px-4 h-14 font-semibold">Atlas migration</td>
+            <td class="px-4">Kwan W.</td>
+            <td class="px-4"><span class="rounded-full px-2.5 py-0.5 text-xs font-semibold bg-amber-100 text-amber-700">At risk</span></td>
+            <td class="px-4 text-slate-600">May 03</td>
+            <td class="px-4 text-right"><div class="inline-flex items-center gap-2"><div class="h-1.5 w-24 rounded-full bg-slate-100 overflow-hidden"><div class="h-full bg-amber-500" style="width:45%"></div></div><span class="text-xs font-semibold">45%</span></div></td>
+          </tr>
+          <tr class="hover:bg-primary-50/40 transition">
+            <td class="px-4 h-14 font-semibold">North portal</td>
+            <td class="px-4">Piti M.</td>
+            <td class="px-4"><span class="rounded-full px-2.5 py-0.5 text-xs font-semibold bg-rose-100 text-rose-700">Blocked</span></td>
+            <td class="px-4 text-slate-600">Apr 19</td>
+            <td class="px-4 text-right"><div class="inline-flex items-center gap-2"><div class="h-1.5 w-24 rounded-full bg-slate-100 overflow-hidden"><div class="h-full bg-rose-500" style="width:23%"></div></div><span class="text-xs font-semibold">23%</span></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- AVATARS -->
+  <section id="avatars" class="demo">
+    <h4>Avatars</h4>
+    <div class="meta">Sizes xs/sm/md/lg · ring-2 white เวลา stack</div>
+    <div class="flex flex-wrap items-end gap-6">
+      <div class="flex items-center gap-2">
+        <div class="h-5 w-5 rounded-full bg-primary-200 flex items-center justify-center text-[9px] font-bold text-primary-800">AN</div>
+        <span class="text-xs text-slate-500">xs 20</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <div class="h-7 w-7 rounded-full bg-primary-200 flex items-center justify-center text-[11px] font-bold text-primary-800">AN</div>
+        <span class="text-xs text-slate-500">sm 28</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <div class="h-9 w-9 rounded-full bg-primary-300 flex items-center justify-center text-xs font-bold text-primary-900">AN</div>
+        <span class="text-xs text-slate-500">md 36</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <div class="h-12 w-12 rounded-full bg-primary-400 flex items-center justify-center text-sm font-bold text-white">AN</div>
+        <span class="text-xs text-slate-500">lg 48</span>
+      </div>
+    </div>
+    <div class="mt-5">
+      <div class="text-xs font-semibold text-slate-500 mb-2">Stacked</div>
+      <div class="flex -space-x-2">
+        <div class="h-9 w-9 rounded-full bg-primary-200 ring-2 ring-white flex items-center justify-center text-xs font-bold text-primary-800">AN</div>
+        <div class="h-9 w-9 rounded-full bg-primary-300 ring-2 ring-white flex items-center justify-center text-xs font-bold text-primary-900">KW</div>
+        <div class="h-9 w-9 rounded-full bg-primary-400 ring-2 ring-white flex items-center justify-center text-xs font-bold text-white">PM</div>
+        <div class="h-9 w-9 rounded-full bg-slate-200 ring-2 ring-white flex items-center justify-center text-xs font-bold text-slate-700">+4</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section id="timeline" class="demo">
+    <h4>Activity timeline</h4>
+    <div class="meta">ใช้ใน audit feed หรือ task history</div>
+    <ol class="relative border-l border-slate-200 pl-6 space-y-5">
+      <li>
+        <div class="absolute -left-[7px] h-3.5 w-3.5 rounded-full bg-primary-600 ring-4 ring-white"></div>
+        <div class="eyebrow">09:24</div>
+        <div class="font-semibold mt-1">Arunee created task <span class="font-mono text-primary-700">TASK-0048</span></div>
+        <div class="text-xs text-slate-500 mt-0.5">Phoenix launch · Backlog</div>
+      </li>
+      <li>
+        <div class="absolute -left-[7px] h-3.5 w-3.5 rounded-full bg-emerald-500 ring-4 ring-white"></div>
+        <div class="eyebrow">10:02</div>
+        <div class="font-semibold mt-1">Moved to <span class="rounded-full px-2 py-0.5 text-xs bg-primary-100 text-primary-700 font-semibold">In progress</span></div>
+      </li>
+      <li>
+        <div class="absolute -left-[7px] h-3.5 w-3.5 rounded-full bg-amber-500 ring-4 ring-white"></div>
+        <div class="eyebrow">11:48</div>
+        <div class="font-semibold mt-1">Flagged as at-risk by AI planner</div>
+        <div class="text-xs text-slate-500 mt-0.5">Dependency on Atlas migration</div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- TOASTS / FEEDBACK -->
+  <section id="toasts" class="demo">
+    <h4>Feedback — toast · empty state · skeleton</h4>
+    <div class="meta">Toasts: bottom-right · timeout 4s (success) / 6s (warn/danger)</div>
+
+    <div class="grid md:grid-cols-2 gap-5">
+      <div class="space-y-3">
+        <div class="rounded-lg bg-white border border-slate-100 shadow-hover p-4 flex items-start gap-3">
+          <div class="h-8 w-8 rounded-full bg-emerald-100 text-emerald-600 inline-flex items-center justify-center"><i data-lucide="check-circle-2" class="h-4 w-4"></i></div>
+          <div class="flex-1">
+            <div class="font-semibold text-sm">Task saved</div>
+            <div class="text-xs text-slate-500">Changes synced to the team</div>
+          </div>
+          <button class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="h-4 w-4"></i></button>
+        </div>
+        <div class="rounded-lg bg-white border border-slate-100 shadow-hover p-4 flex items-start gap-3">
+          <div class="h-8 w-8 rounded-full bg-amber-100 text-amber-600 inline-flex items-center justify-center"><i data-lucide="triangle-alert" class="h-4 w-4"></i></div>
+          <div class="flex-1">
+            <div class="font-semibold text-sm">Draft expires in 10 min</div>
+            <div class="text-xs text-slate-500">Apply or regenerate</div>
+          </div>
+          <button class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="h-4 w-4"></i></button>
+        </div>
+        <div class="rounded-lg bg-white border border-slate-100 shadow-hover p-4 flex items-start gap-3">
+          <div class="h-8 w-8 rounded-full bg-rose-100 text-rose-600 inline-flex items-center justify-center"><i data-lucide="circle-alert" class="h-4 w-4"></i></div>
+          <div class="flex-1">
+            <div class="font-semibold text-sm">Failed to save</div>
+            <div class="text-xs text-slate-500">Please retry</div>
+          </div>
+          <button class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="h-4 w-4"></i></button>
+        </div>
+      </div>
+
+      <div class="space-y-5">
+        <!-- empty state -->
+        <div class="rounded-xl border-2 border-dashed border-primary-200 bg-primary-50/40 p-8 text-center">
+          <div class="h-12 w-12 rounded-full bg-white shadow-soft mx-auto flex items-center justify-center text-primary-600">
+            <i data-lucide="inbox" class="h-6 w-6"></i>
+          </div>
+          <div class="display font-semibold mt-3">No tasks yet</div>
+          <div class="text-sm text-slate-500 mt-1">Start by importing or creating one</div>
+          <button class="mt-4 h-10 px-4 rounded-md bg-primary-600 text-white font-semibold shadow-soft hover:bg-primary-700 transition">Create task</button>
+        </div>
+
+        <!-- skeleton -->
+        <div class="rounded-xl bg-white border border-slate-100 p-4 shadow-soft">
+          <div class="eyebrow">Skeleton</div>
+          <div class="mt-3 space-y-2 animate-pulse">
+            <div class="h-3 rounded bg-slate-100 w-2/3"></div>
+            <div class="h-3 rounded bg-slate-100 w-1/2"></div>
+            <div class="h-3 rounded bg-slate-100 w-5/6"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APP SHELL -->
+  <section id="nav" class="demo">
+    <h4>App shell preview</h4>
+    <div class="meta">Sidebar (240) + topbar (64) · main max-w 1280</div>
+    <div class="rounded-xl overflow-hidden border border-slate-100 shadow-soft">
+      <div class="flex">
+        <!-- sidebar -->
+        <aside class="w-56 bg-brand-navy text-white p-4 space-y-1 text-sm">
+          <div class="flex items-center gap-2 pb-4 border-b border-white/10">
+            <div class="h-7 w-7 rounded-md bg-gradient-to-br from-primary-400 to-primary-700"></div>
+            <div class="font-semibold display">Todolist</div>
+          </div>
+          <a class="flex items-center gap-3 h-9 px-3 rounded-md bg-white/10 font-semibold"><i data-lucide="layout-dashboard" class="h-4 w-4"></i>Overview</a>
+          <a class="flex items-center gap-3 h-9 px-3 rounded-md text-primary-100 hover:bg-white/5"><i data-lucide="briefcase" class="h-4 w-4"></i>Projects</a>
+          <a class="flex items-center gap-3 h-9 px-3 rounded-md text-primary-100 hover:bg-white/5"><i data-lucide="brain-circuit" class="h-4 w-4"></i>AI Planner</a>
+          <a class="flex items-center gap-3 h-9 px-3 rounded-md text-primary-100 hover:bg-white/5"><i data-lucide="users" class="h-4 w-4"></i>Teams</a>
+          <a class="flex items-center gap-3 h-9 px-3 rounded-md text-primary-100 hover:bg-white/5"><i data-lucide="bar-chart-3" class="h-4 w-4"></i>KPI</a>
+          <a class="flex items-center gap-3 h-9 px-3 rounded-md text-primary-100 hover:bg-white/5"><i data-lucide="shield-check" class="h-4 w-4"></i>Security</a>
+        </aside>
+        <!-- main -->
+        <div class="flex-1 bg-brand-sky">
+          <div class="h-14 bg-white border-b border-slate-100 px-4 flex items-center justify-between">
+            <div class="flex items-center gap-2 text-xs text-slate-500">Projects <i data-lucide="chevron-right" class="h-3 w-3"></i> <span class="text-slate-800 font-semibold">Phoenix launch</span></div>
+            <div class="flex items-center gap-2">
+              <div class="hidden md:flex h-8 px-2 rounded-md border border-slate-200 items-center gap-2 text-xs text-slate-400">
+                <i data-lucide="search" class="h-3.5 w-3.5"></i>Search <kbd class="font-mono text-[10px] bg-slate-100 rounded px-1">⌘K</kbd>
+              </div>
+              <div class="h-8 w-8 rounded-full bg-primary-300 flex items-center justify-center text-xs font-bold text-primary-900">AN</div>
+            </div>
+          </div>
+          <div class="p-6 space-y-3">
+            <div class="h-16 rounded-xl bg-gradient-to-br from-primary-700 to-primary-950"></div>
+            <div class="grid grid-cols-4 gap-3">
+              <div class="h-14 rounded-lg bg-white shadow-soft"></div>
+              <div class="h-14 rounded-lg bg-white shadow-soft"></div>
+              <div class="h-14 rounded-lg bg-white shadow-soft"></div>
+              <div class="h-14 rounded-lg bg-white shadow-soft"></div>
+            </div>
+            <div class="grid grid-cols-3 gap-3">
+              <div class="col-span-2 h-32 rounded-xl bg-white shadow-soft"></div>
+              <div class="h-32 rounded-xl bg-white shadow-soft"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div id="site-footer"></div>
+<script src="assets/site.js"></script>
+<script>document.addEventListener('DOMContentLoaded', () => window.lucide && lucide.createIcons());</script>
+</body>
+</html>

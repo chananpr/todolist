@@ -10,6 +10,7 @@
     "dev:web": "npm run dev -w apps/web",
     "dev:api": "npm run dev -w apps/api",
     "dev": "npm run dev:api & npm run dev:web",
+    "design": "cd design && (command -v python3 >/dev/null && python3 -m http.server 8080 || npx --yes serve . -l 8080)",
     "build": "npm run build -w @taskforge/contracts && npm run build -w apps/api && npm run build -w apps/web",
     "typecheck": "npm run typecheck -w @taskforge/contracts && npm run typecheck -w apps/api && npm run typecheck -w apps/web"
   }

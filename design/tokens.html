@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tokens · Todolist Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+<script src="assets/tailwind-config.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<link rel="stylesheet" href="assets/site.css" />
+</head>
+<body class="min-h-screen">
+<div id="site-nav"></div>
+
+<main class="max-w-7xl mx-auto px-6 py-10 space-y-14">
+
+  <header>
+    <div class="eyebrow">01 · Foundations</div>
+    <h1 class="display text-4xl font-semibold mt-2">Design tokens</h1>
+    <p class="text-slate-600 mt-2 max-w-2xl">
+      ค่าทั้งหมดตรงกับ <code class="bg-slate-100 px-1 rounded">apps/web/tailwind.config.ts</code> — ถ้าจะแก้ต้องอัปเดตทั้งสองที่
+    </p>
+  </header>
+
+  <!-- Primary scale -->
+  <section>
+    <div class="flex items-end justify-between">
+      <div>
+        <div class="eyebrow">Color</div>
+        <h2 class="display text-2xl font-semibold mt-1">Primary scale</h2>
+      </div>
+      <div class="text-xs text-slate-500">คลิกเพื่อคัดลอก hex</div>
+    </div>
+    <div class="mt-5 grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-11 gap-3" id="primary-swatches"></div>
+  </section>
+
+  <!-- Brand -->
+  <section>
+    <div class="eyebrow">Color</div>
+    <h2 class="display text-2xl font-semibold mt-1">Brand</h2>
+    <div class="mt-5 grid grid-cols-2 md:grid-cols-5 gap-4" id="brand-swatches"></div>
+  </section>
+
+  <!-- Semantic -->
+  <section>
+    <div class="eyebrow">Color</div>
+    <h2 class="display text-2xl font-semibold mt-1">Semantic</h2>
+    <p class="text-sm text-slate-600 mt-1">สำหรับสื่อ status — ห้ามใช้สีนอกชุดนี้</p>
+    <div class="mt-5 grid grid-cols-2 md:grid-cols-5 gap-4">
+      <div class="rounded-xl bg-white border border-slate-100 p-4 shadow-soft">
+        <div class="flex items-center justify-between">
+          <div class="font-semibold">Success</div>
+          <div class="h-5 w-5 rounded bg-emerald-500"></div>
+        </div>
+        <div class="text-xs text-slate-500 font-mono mt-1">#10b981 · emerald-500</div>
+        <span class="mt-3 inline-flex items-center h-7 px-2.5 rounded-full bg-emerald-100 text-emerald-700 text-xs font-semibold">Resolved</span>
+      </div>
+      <div class="rounded-xl bg-white border border-slate-100 p-4 shadow-soft">
+        <div class="flex items-center justify-between">
+          <div class="font-semibold">Warning</div>
+          <div class="h-5 w-5 rounded bg-amber-500"></div>
+        </div>
+        <div class="text-xs text-slate-500 font-mono mt-1">#f59e0b · amber-500</div>
+        <span class="mt-3 inline-flex items-center h-7 px-2.5 rounded-full bg-amber-100 text-amber-700 text-xs font-semibold">Needs review</span>
+      </div>
+      <div class="rounded-xl bg-white border border-slate-100 p-4 shadow-soft">
+        <div class="flex items-center justify-between">
+          <div class="font-semibold">Danger</div>
+          <div class="h-5 w-5 rounded bg-rose-500"></div>
+        </div>
+        <div class="text-xs text-slate-500 font-mono mt-1">#f43f5e · rose-500</div>
+        <span class="mt-3 inline-flex items-center h-7 px-2.5 rounded-full bg-rose-100 text-rose-700 text-xs font-semibold">Blocked</span>
+      </div>
+      <div class="rounded-xl bg-white border border-slate-100 p-4 shadow-soft">
+        <div class="flex items-center justify-between">
+          <div class="font-semibold">Info</div>
+          <div class="h-5 w-5 rounded bg-sky-500"></div>
+        </div>
+        <div class="text-xs text-slate-500 font-mono mt-1">#0ea5e9 · sky-500</div>
+        <span class="mt-3 inline-flex items-center h-7 px-2.5 rounded-full bg-sky-100 text-sky-700 text-xs font-semibold">In progress</span>
+      </div>
+      <div class="rounded-xl bg-white border border-slate-100 p-4 shadow-soft">
+        <div class="flex items-center justify-between">
+          <div class="font-semibold">Neutral</div>
+          <div class="h-5 w-5 rounded bg-slate-500"></div>
+        </div>
+        <div class="text-xs text-slate-500 font-mono mt-1">#64748b · slate-500</div>
+        <span class="mt-3 inline-flex items-center h-7 px-2.5 rounded-full bg-slate-100 text-slate-700 text-xs font-semibold">Draft</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Typography -->
+  <section>
+    <div class="eyebrow">Type</div>
+    <h2 class="display text-2xl font-semibold mt-1">Typography</h2>
+    <div class="mt-5 grid md:grid-cols-2 gap-5">
+      <div class="rounded-2xl bg-white border border-slate-100 p-6 shadow-soft space-y-5">
+        <div>
+          <div class="eyebrow">display xl · 48/56 · 600</div>
+          <div class="display text-5xl font-semibold leading-tight mt-1">Command your operations.</div>
+        </div>
+        <div>
+          <div class="eyebrow">display l · 32/40 · 600</div>
+          <div class="display text-3xl font-semibold mt-1">Today's signals</div>
+        </div>
+        <div>
+          <div class="eyebrow">display m · 24/32 · 600</div>
+          <div class="display text-2xl font-semibold mt-1">Section heading</div>
+        </div>
+      </div>
+      <div class="rounded-2xl bg-white border border-slate-100 p-6 shadow-soft space-y-5">
+        <div>
+          <div class="eyebrow">body l · 18/28 · 500</div>
+          <div class="text-lg mt-1">Lead paragraph for hero regions and call-outs.</div>
+        </div>
+        <div>
+          <div class="eyebrow">body · 15/24 · 400</div>
+          <div class="text-[15px] leading-6 text-slate-700 mt-1">Default body text — comfortable line height for data-dense UI, keeps readability high when tables grow.</div>
+        </div>
+        <div>
+          <div class="eyebrow">body s · 13/20 · 500</div>
+          <div class="text-[13px] text-slate-500 mt-1">Meta, captions, helper text</div>
+        </div>
+        <div>
+          <div class="eyebrow">mono</div>
+          <div class="font-mono text-[13px] text-slate-600 mt-1">TASK-0048 · $4,820 · 2026-04-22</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Shadow -->
+  <section>
+    <div class="eyebrow">Elevation</div>
+    <h2 class="display text-2xl font-semibold mt-1">Shadows</h2>
+    <div class="mt-5 grid grid-cols-2 md:grid-cols-4 gap-5">
+      <div class="rounded-xl bg-white p-6 shadow-soft">
+        <div class="font-semibold">shadow-soft</div>
+        <div class="text-xs text-slate-500 mt-1">default card</div>
+      </div>
+      <div class="rounded-xl bg-white p-6 shadow-panel">
+        <div class="font-semibold">shadow-panel</div>
+        <div class="text-xs text-slate-500 mt-1">modal, drawer, hero</div>
+      </div>
+      <div class="rounded-xl bg-white p-6 shadow-hover">
+        <div class="font-semibold">shadow-hover</div>
+        <div class="text-xs text-slate-500 mt-1">interactive hover</div>
+      </div>
+      <div class="rounded-xl bg-white p-6 shadow-shell">
+        <div class="font-semibold">shadow-shell</div>
+        <div class="text-xs text-slate-500 mt-1">app shell outer</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Radius -->
+  <section>
+    <div class="eyebrow">Shape</div>
+    <h2 class="display text-2xl font-semibold mt-1">Radius</h2>
+    <div class="mt-5 grid grid-cols-3 md:grid-cols-6 gap-4">
+      <div class="bg-white border border-slate-100 p-4 shadow-soft rounded-sm"><div class="text-xs font-semibold">sm · 4</div><div class="text-[11px] text-slate-500">badge</div></div>
+      <div class="bg-white border border-slate-100 p-4 shadow-soft rounded-md"><div class="text-xs font-semibold">md · 8</div><div class="text-[11px] text-slate-500">button</div></div>
+      <div class="bg-white border border-slate-100 p-4 shadow-soft rounded-lg"><div class="text-xs font-semibold">lg · 12</div><div class="text-[11px] text-slate-500">chip</div></div>
+      <div class="bg-white border border-slate-100 p-4 shadow-soft rounded-xl"><div class="text-xs font-semibold">xl · 16</div><div class="text-[11px] text-slate-500">card</div></div>
+      <div class="bg-white border border-slate-100 p-4 shadow-soft rounded-2xl"><div class="text-xs font-semibold">2xl · 20</div><div class="text-[11px] text-slate-500">panel</div></div>
+      <div class="bg-white border border-slate-100 p-4 shadow-soft rounded-3xl"><div class="text-xs font-semibold">3xl · 28</div><div class="text-[11px] text-slate-500">shell</div></div>
+    </div>
+  </section>
+
+  <!-- Motion -->
+  <section>
+    <div class="eyebrow">Motion</div>
+    <h2 class="display text-2xl font-semibold mt-1">Motion</h2>
+    <p class="text-sm text-slate-600 mt-1">Interaction ทั่วไป ห้ามเกิน 250ms — hover คลิก modal ทั้งหมด</p>
+    <div class="mt-5 grid md:grid-cols-4 gap-4">
+      <div class="rounded-xl bg-white border border-slate-100 p-5 shadow-soft">
+        <div class="font-semibold">Hover</div>
+        <div class="text-xs text-slate-500 font-mono mt-1">150ms · ease-out</div>
+        <button class="mt-4 h-9 px-3 rounded-md bg-primary-600 text-white text-sm font-semibold transition hover:bg-primary-700 hover:shadow-hover hover:-translate-y-0.5">ลอง hover</button>
+      </div>
+      <div class="rounded-xl bg-white border border-slate-100 p-5 shadow-soft">
+        <div class="font-semibold">Card reveal</div>
+        <div class="text-xs text-slate-500 font-mono mt-1">220ms · bezier(.2,.8,.2,1)</div>
+      </div>
+      <div class="rounded-xl bg-white border border-slate-100 p-5 shadow-soft">
+        <div class="font-semibold">Drawer</div>
+        <div class="text-xs text-slate-500 font-mono mt-1">250ms · bezier(.2,.8,.2,1)</div>
+      </div>
+      <div class="rounded-xl bg-white border border-slate-100 p-5 shadow-soft">
+        <div class="font-semibold">Page transition</div>
+        <div class="text-xs text-slate-500 font-mono mt-1">220ms · ease-in-out</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Spacing -->
+  <section>
+    <div class="eyebrow">Spacing</div>
+    <h2 class="display text-2xl font-semibold mt-1">Spacing scale</h2>
+    <div class="mt-5 rounded-2xl bg-white border border-slate-100 p-6 shadow-soft">
+      <div class="space-y-2" id="spacing-bars"></div>
+    </div>
+  </section>
+
+</main>
+
+<div id="site-footer"></div>
+<script src="assets/site.js"></script>
+<script>
+  const PRIMARY = [
+    ['50','#eff6ff'],['100','#dbeafe'],['200','#bfdbfe'],['300','#93c5fd'],
+    ['400','#60a5fa'],['500','#3b82f6'],['600','#2563eb'],['700','#1d4ed8'],
+    ['800','#1e40af'],['900','#1e3a8a'],['950','#172554']
+  ];
+  const BRAND = [
+    ['brand-blue','#2563eb','primary CTA, logo'],
+    ['brand-navy','#1e3a8a','shell header'],
+    ['brand-sky','#eff6ff','page background'],
+    ['brand-mist','#f8fbff','card surface'],
+    ['brand-ink','#0f172a','body text']
+  ];
+  const SPACING = [0,1,2,3,4,5,6,8,10,12,16,20,24];
+
+  function copy(text){
+    navigator.clipboard?.writeText(text);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const ps = document.getElementById('primary-swatches');
+    ps.innerHTML = PRIMARY.map(([step, hex]) => `
+      <button class="text-left group" onclick="navigator.clipboard && navigator.clipboard.writeText('${hex}')" title="copy ${hex}">
+        <div class="swatch shadow-soft" style="background:${hex}"></div>
+        <div class="mt-1.5 text-[11px] font-semibold">${step}</div>
+        <div class="text-[10px] font-mono text-slate-500 group-hover:text-primary-700">${hex}</div>
+      </button>`).join('');
+
+    const bs = document.getElementById('brand-swatches');
+    bs.innerHTML = BRAND.map(([name, hex, use]) => `
+      <button class="rounded-xl bg-white border border-slate-100 p-4 shadow-soft text-left hover:shadow-hover transition" onclick="navigator.clipboard && navigator.clipboard.writeText('${hex}')">
+        <div class="swatch shadow-soft" style="background:${hex}; ${hex.startsWith('#eff')||hex.startsWith('#f8f') ? 'border:1px solid #e2e8f0;':''}"></div>
+        <div class="mt-2 text-sm font-semibold">${name}</div>
+        <div class="text-[11px] font-mono text-slate-500">${hex}</div>
+        <div class="text-[11px] text-slate-500 mt-1">${use}</div>
+      </button>`).join('');
+
+    const bars = document.getElementById('spacing-bars');
+    bars.innerHTML = SPACING.map(n => `
+      <div class="flex items-center gap-4">
+        <div class="w-10 text-xs font-mono text-slate-500">${n}</div>
+        <div class="h-3 rounded bg-primary-500" style="width:${n * 4}px"></div>
+        <div class="text-xs text-slate-500">${n*4}px</div>
+      </div>`).join('');
+
+    if (window.lucide) lucide.createIcons();
+  });
+</script>
+</body>
+</html>
