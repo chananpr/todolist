@@ -44,3 +44,13 @@ export interface DashboardOverview {
   load: DashboardLoadItem[];
   recentActivity: string[];
 }
+
+export interface ProjectSummary {
+  id: number;
+  projectCode: string;
+  projectName: string;
+  status: string;
+  priority: string;
+  progressPercent: number;
+  dueDate: string | null;
+}
