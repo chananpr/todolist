@@ -6,6 +6,9 @@ import {
   type TaskBoardColumn,
   type Priority
 } from '@taskforge/contracts';
+import type { Activity } from './types';
+
+export type { Activity };
 
 export type RiskLevel = 'low' | 'medium' | 'high';
 
@@ -33,13 +36,6 @@ export interface Comment {
   author: { name: string; initial: string };
   body: string;
   createdAt: string;
-}
-
-export interface Activity {
-  id: string;
-  event: string;
-  actor: string;
-  at: string;
 }
 
 export interface Task {
