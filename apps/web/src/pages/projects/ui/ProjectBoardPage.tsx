@@ -22,6 +22,7 @@ import {
   TASK_BOARD_COLUMNS,
   type Task
 } from '../../../shared/data/projects';
+import { TaskDetailDrawer } from '../../../widgets/task-detail/ui/TaskDetailDrawer';
 import type { TaskBoardColumn, Priority } from '@taskforge/contracts';
 
 const LANE_LABELS: Record<TaskBoardColumn, string> = {
@@ -41,6 +42,7 @@ export function ProjectBoardPage() {
 
   const [tasks, setTasks] = useState<Task[]>(initialTasks);
   const [activeTaskId, setActiveTaskId] = useState<string | null>(null);
+  const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 6 } })
@@ -115,17 +117,22 @@ export function ProjectBoardPage() {
       <DndContext sensors={sensors} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-6">
           {TASK_BOARD_COLUMNS.map((lane) => (
-            <Lane key={lane} lane={lane} tasks={byLane[lane]} />
+            <Lane key={lane} lane={lane} tasks={byLane[lane]} onTaskClick={setSelectedTaskId} />
           ))}
         </div>
 
         <DragOverlay>{activeTask ? <TaskCard task={activeTask} isOverlay /> : null}</DragOverlay>
       </DndContext>
+
+      <TaskDetailDrawer
+        task={tasks.find((t) => t.id === selectedTaskId) ?? null}
+        onClose={() => setSelectedTaskId(null)}
+      />
     </RouteScaffold>
   );
 }
 
-function Lane({ lane, tasks }: { lane: TaskBoardColumn; tasks: Task[] }) {
+function Lane({ lane, tasks, onTaskClick }: { lane: TaskBoardColumn; tasks: Task[]; onTaskClick: (id: string) => void }) {
   const { setNodeRef, isOver } = useDroppable({ id: lane });
   return (
     <div
@@ -146,7 +153,7 @@ function Lane({ lane, tasks }: { lane: TaskBoardColumn; tasks: Task[] }) {
       <SortableContext id={lane} items={tasks.map((t) => t.id)} strategy={verticalListSortingStrategy}>
         <div className="flex min-h-[80px] flex-col gap-2">
           {tasks.map((task) => (
-            <SortableTaskCard key={task.id} task={task} />
+            <SortableTaskCard key={task.id} task={task} onClick={() => onTaskClick(task.id)} />
           ))}
           {tasks.length === 0 && (
             <div className="rounded-lg border border-dashed border-slate-200 bg-white/40 p-3 text-center text-[11px] text-slate-400">
@@ -159,7 +166,7 @@ function Lane({ lane, tasks }: { lane: TaskBoardColumn; tasks: Task[] }) {
   );
 }
 
-function SortableTaskCard({ task }: { task: Task }) {
+function SortableTaskCard({ task, onClick }: { task: Task; onClick?: () => void }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: task.id
   });
@@ -171,12 +178,12 @@ function SortableTaskCard({ task }: { task: Task }) {
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <TaskCard task={task} />
+      <TaskCard task={task} onClick={onClick} />
     </div>
   );
 }
 
-function TaskCard({ task, isOverlay = false }: { task: Task; isOverlay?: boolean }) {
+function TaskCard({ task, isOverlay = false, onClick }: { task: Task; isOverlay?: boolean; onClick?: () => void }) {
   const priorityDot: Record<Priority, string> = {
     low: 'bg-slate-300',
     medium: 'bg-amber-500',
@@ -187,6 +194,7 @@ function TaskCard({ task, isOverlay = false }: { task: Task; isOverlay?: boolean
 
   return (
     <article
+      onClick={onClick}
       className={`cursor-grab select-none rounded-lg border border-slate-100 bg-white p-3 shadow-soft transition ${
         isOverlay ? 'rotate-1 shadow-hover' : 'hover:-translate-y-0.5 hover:shadow-hover'
       }`}
